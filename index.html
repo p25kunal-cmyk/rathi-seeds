@@ -7,13 +7,18 @@
   <meta name="theme-color" content="#0f1a15">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Rathi Seeds">
   <title>Rathi Seeds — Bill Manager</title>
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="css/styles.css">
 
-  <!-- Favicon (seed emoji fallback) -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌾</text></svg>">
+  <!-- Icons -->
+  <link rel="icon" href="assets/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
 </head>
 <body>
   <div id="app">
@@ -28,7 +33,10 @@
         </div>
       </div>
       <div class="app-header__right">
-        <!-- Future: settings, profile -->
+        <button class="install-btn" id="installBtn" style="display:none;" title="Install App">
+          <span class="install-btn__icon">📲</span>
+          <span class="install-btn__text">Install</span>
+        </button>
       </div>
     </header>
 
@@ -77,5 +85,45 @@
   <script src="js/excel-parser.js"></script>
   <script src="js/bill-generator.js"></script>
   <script src="js/app.js"></script>
+
+  <!-- ===== SERVICE WORKER & INSTALL PROMPT ===== -->
+  <script>
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then((reg) => console.log('SW registered:', reg.scope))
+          .catch((err) => console.warn('SW registration failed:', err));
+      });
+    }
+
+    // PWA Install Prompt
+    let deferredPrompt = null;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      // Show the install button
+      const installBtn = document.getElementById('installBtn');
+      if (installBtn) installBtn.style.display = 'flex';
+    });
+
+    document.getElementById('installBtn')?.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      console.log('Install prompt outcome:', outcome);
+      deferredPrompt = null;
+      document.getElementById('installBtn').style.display = 'none';
+    });
+
+    // Hide install button if already installed
+    window.addEventListener('appinstalled', () => {
+      deferredPrompt = null;
+      const installBtn = document.getElementById('installBtn');
+      if (installBtn) installBtn.style.display = 'none';
+      console.log('App installed successfully');
+    });
+  </script>
 </body>
 </html>
