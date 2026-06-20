@@ -173,14 +173,11 @@ const BillGenerator = (() => {
           ${footerHTML}
         </div>
         <div class="bill-actions">
-          <button class="btn btn--primary btn--sm" onclick="App.copyBillText(${party.id})">
-            📋 Copy Text
-          </button>
-          <button class="btn btn--outline btn--sm" onclick="App.showBillText(${party.id})">
-            📝 View Text
-          </button>
           <button class="btn btn--outline btn--sm" onclick="App.downloadBillPDF(${party.id})">
-            📄 PDF
+            📄 Download PDF
+          </button>
+          <button class="btn btn--primary btn--sm" onclick="App.shareBillWhatsApp(${party.id})">
+            💬 Share PDF
           </button>
         </div>
       </div>`;

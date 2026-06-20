@@ -685,6 +685,22 @@ const App = (() => {
     });
   }
 
+  function shareBillWhatsApp(partyId) {
+    const fileData = state.files[state.activeFileIndex];
+    const party = fileData.parties.find(p => p.id === partyId);
+    if (!party) return;
+
+    // Generate the clean text format of the bill
+    const text = BillGenerator.generateBillText(party);
+    
+    // The specific number requested by the user
+    const phone = "919307032698"; 
+    
+    // Open WhatsApp Web directly with the pre-filled text
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+    window.open(url, '_blank');
+  }
+
   function copyAllBills() {
     const fileData = state.files[state.activeFileIndex];
     const selectedParties = fileData.parties.filter(p => state.selectedParties.has(p.id));
@@ -767,6 +783,7 @@ const App = (() => {
     copyBillText,
     showBillText,
     downloadBillPDF,
+    shareBillWhatsApp,
     copyAllBills,
     closeModal,
     deleteFile,

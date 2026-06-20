@@ -638,13 +638,24 @@ a { color: var(--clr-primary); text-decoration: none; }
   box-shadow: none !important;
   background: #ffffff !important;
   margin: 0 !important;
-  padding: 20px !important;
+  padding: 30px !important;
 }
-.pdf-exporting * {
-  color: #000 !important; /* Force high contrast for PDF */
+.pdf-exporting *,
+.pdf-exporting .bill-line__label,
+.pdf-exporting .bill-line__value,
+.pdf-exporting .text-dim,
+.pdf-exporting .bill-header__party {
+  color: #000000 !important;
+  opacity: 1 !important;
+  font-weight: 600 !important;
+}
+.pdf-exporting .bill-header__badge {
+  color: #000000 !important;
+  background: #f0f0f0 !important;
+  border: 1px solid #000 !important;
 }
 .pdf-exporting .bill-line {
-  border-bottom-color: #ddd !important;
+  border-bottom-color: #000000 !important;
 }
 
 /* ---------- Buttons ---------- */
