@@ -4,7 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="description" content="Rathi Seeds - Bill Management & Party Allotment System for seed trading">
-  <meta name="theme-color" content="#0f1a15">
+  <meta name="theme-color" content="#e8f0eb" id="themeColorMeta">
+
+  <!-- Prevent flash of wrong theme -->
+  <script>
+    (function() {
+      var t = localStorage.getItem('rathiSeeds_theme');
+      if (t === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        var m = document.querySelector('#themeColorMeta');
+        if (m) m.content = '#0f1a15';
+      }
+    })();
+  </script>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Rathi Seeds">
@@ -36,6 +48,9 @@
         <button class="install-btn" id="installBtn" style="display:none;" title="Install App">
           <span class="install-btn__icon">📲</span>
           <span class="install-btn__text">Install</span>
+        </button>
+        <button class="theme-toggle" id="themeToggle" title="Toggle dark mode">
+          <span id="themeIcon">🌙</span>
         </button>
       </div>
     </header>
@@ -124,6 +139,41 @@
       if (installBtn) installBtn.style.display = 'none';
       console.log('App installed successfully');
     });
+
+    // ===== THEME TOGGLE =====
+    (function() {
+      const THEME_KEY = 'rathiSeeds_theme';
+      const toggle = document.getElementById('themeToggle');
+      const icon = document.getElementById('themeIcon');
+      const metaColor = document.getElementById('themeColorMeta');
+
+      function applyTheme(theme) {
+        if (theme === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          icon.textContent = '☀️';
+          toggle.title = 'Switch to light mode';
+          if (metaColor) metaColor.content = '#0f1a15';
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+          icon.textContent = '🌙';
+          toggle.title = 'Switch to dark mode';
+          if (metaColor) metaColor.content = '#e8f0eb';
+        }
+        localStorage.setItem(THEME_KEY, theme);
+      }
+
+      // Set initial icon based on stored theme
+      const stored = localStorage.getItem(THEME_KEY);
+      if (stored === 'dark') {
+        icon.textContent = '☀️';
+        toggle.title = 'Switch to light mode';
+      }
+
+      toggle.addEventListener('click', () => {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        applyTheme(isDark ? 'light' : 'dark');
+      });
+    })();
   </script>
 </body>
 </html>

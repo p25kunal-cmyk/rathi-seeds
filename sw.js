@@ -5,7 +5,7 @@
  * Uses a "cache-first, network-update" strategy.
  */
 
-const CACHE_NAME = 'rathi-seeds-v1';
+const CACHE_NAME = 'rathi-seeds-v2';
 
 const CORE_ASSETS = [
   '/',
