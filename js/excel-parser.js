@@ -71,8 +71,14 @@ const ExcelParser = (() => {
     
     // 2. Read Party Data Rows (assuming row 3 onwards, r=2)
     const parties = [];
+    let currentCenter = '';
     
     for (let r = 2; r <= range.e.r; r++) {
+      let rawCenter = getCellValue(ws, r, 1); // Col B
+      if (rawCenter && String(rawCenter).trim() !== '') {
+        currentCenter = String(rawCenter).trim();
+      }
+
       let partyName = getCellValue(ws, r, 2); // Column C
       if (!partyName) {
         // Try column A or B as fallback for differently structured sheets
@@ -88,10 +94,26 @@ const ExcelParser = (() => {
         continue;
       }
 
+      // Check if this row actually has billing data. If it has no data, 
+      // it is likely just an Area header row, so we skip adding it as a party.
+      let hasData = false;
+      template.forEach(t => {
+        if (t.sourceCol !== null) {
+          const val = getCellValue(ws, r, t.sourceCol);
+          if (val !== undefined && val !== null && String(val).trim() !== '') {
+            hasData = true;
+          }
+        }
+      });
+
+      if (!hasData) {
+        continue; // It's just a header or blank row, skip it
+      }
+
       const party = {
         id: parties.length + 1,
         srNo:   getCellValue(ws, r, 0), // Col A
-        center: getCellValue(ws, r, 1), // Col B
+        center: currentCenter,          // Inherited Area/Center
         name:   partyName,              // Col C
         phone:  getCellValue(ws, r, 3), // Col D
         dynamicData: [],
