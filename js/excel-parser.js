@@ -81,6 +81,12 @@ const ExcelParser = (() => {
       if (!partyName) continue; // Skip truly empty rows
       partyName = String(partyName).trim();
       if (!partyName) continue;
+      
+      // Skip headers or total rows that might accidentally be parsed
+      const lowerName = partyName.toLowerCase();
+      if (lowerName === 'party' || lowerName.includes('party name') || lowerName.includes('name of party') || lowerName.includes('total')) {
+        continue;
+      }
 
       const party = {
         id: parties.length + 1,
