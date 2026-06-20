@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Rathi Seeds - Bill Management & Party Allotment System for seed trading">
+  <meta name="theme-color" content="#0f1a15">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Rathi Seeds — Bill Manager</title>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Favicon (seed emoji fallback) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌾</text></svg>">
+</head>
+<body>
+  <div id="app">
+
+    <!-- ===== HEADER ===== -->
+    <header class="app-header">
+      <div class="app-header__logo">
+        <div class="app-header__icon">R</div>
+        <div>
+          <div class="app-header__title">Rathi Seeds</div>
+          <div class="app-header__subtitle">Bill Manager</div>
+        </div>
+      </div>
+      <div class="app-header__right">
+        <!-- Future: settings, profile -->
+      </div>
+    </header>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="main-content">
+
+      <!-- Upload View -->
+      <section class="view-section" id="view-upload">
+        <!-- Rendered by JS -->
+      </section>
+
+      <!-- Parties View -->
+      <section class="view-section" id="view-parties">
+        <!-- Rendered by JS -->
+      </section>
+
+      <!-- Bills View -->
+      <section class="view-section" id="view-bills">
+        <!-- Rendered by JS -->
+      </section>
+
+    </main>
+
+    <!-- ===== BOTTOM NAVIGATION ===== -->
+    <nav class="bottom-nav" id="bottomNav">
+      <!-- Rendered by JS -->
+    </nav>
+
+    <!-- ===== MODAL OVERLAY ===== -->
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal-sheet" id="modalSheet">
+        <!-- Dynamic content -->
+      </div>
+    </div>
+
+    <!-- ===== TOAST ===== -->
+    <div class="toast" id="toast"></div>
+
+  </div>
+
+  <!-- ===== SCRIPTS ===== -->
+  <!-- SheetJS (xlsx) for Excel parsing — loaded from CDN -->
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+
+  <!-- App modules -->
+  <script src="js/excel-parser.js"></script>
+  <script src="js/bill-generator.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
