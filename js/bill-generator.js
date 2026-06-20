@@ -40,13 +40,12 @@ const BillGenerator = (() => {
    * Generate plain text bill (WhatsApp-ready)
    */
   function generateBillText(party) {
-    const sep = '━'.repeat(32);
-    const sepThin = '─'.repeat(32);
+    const sep = '-----------------------------------';
     
     let text = '';
     let hasHeader = false;
 
-    // Header logic (usually the first static item)
+    // Header logic
     if (party.dynamicData.length > 0 && party.dynamicData[0].isHeader) {
       const headerTitle = party.dynamicData[0].label || party.dynamicData[0].staticVal;
       text += `🌾 *${headerTitle}*\n`;
@@ -57,23 +56,21 @@ const BillGenerator = (() => {
       text += sep + '\n';
     }
 
-    text += `📋 *Party:* ${party.name}\n`;
+    text += `👤 *Party:* ${party.name}\n`;
     if (party.center) text += `📍 *Center:* ${party.center}\n`;
-    text += sepThin + '\n\n';
+    text += `\n*DETAILS:*\n`;
 
     let footerText = '';
 
     party.dynamicData.forEach((item, idx) => {
-      // Skip the first item if it was used as header
       if (idx === 0 && hasHeader) return;
 
       if (item.isStatic) {
-        // Collect static fields for footer (e.g. Bank details)
-        if (item.label) footerText += `🏛️ ${item.label}\n`;
+        if (item.label) footerText += `${item.label}\n`;
         return;
       }
 
-      if (item.value === null || item.value === '') return; // Skip empty rows
+      if (item.value === null || item.value === '') return;
 
       const isTotal = item.isCurrency && item.label.toLowerCase().includes('total');
       const isBalance = item.isCurrency && item.label.toLowerCase().includes('balance');
@@ -82,23 +79,22 @@ const BillGenerator = (() => {
       const valStr = item.isCurrency ? formatCurrency(item.value) : formatNumber(item.value) + ' bags';
 
       if (isTotal) {
-        text += sepThin + '\n';
-        text += `💰 *${item.label}:* ${valStr}\n`;
-        text += sepThin + '\n';
+        text += sep + '\n';
+        text += `💰 *TOTAL AMOUNT:* ${valStr}\n`;
       } else if (isBalance) {
-        text += sep + '\n';
-        text += `🏦 *${item.label}:*\n`;
-        text += `   *${valStr}*\n`;
-        text += sep + '\n';
+        text += `\n🏦 *BALANCE DUE:*\n`;
+        text += `*${valStr}*\n`;
+        text += `_(${item.label})_\n`;
       } else if (isBooking) {
-        text += `✅ *${item.label}:* ${valStr}\n`;
+        text += `✅ *BOOKING AMOUNT:* ${valStr}\n`;
       } else {
-        text += `  ${item.label}: ${valStr}\n`;
+        text += `▫️ ${item.label}: ${valStr}\n`;
       }
     });
 
     if (footerText) {
-      text += '\n' + footerText;
+      text += sep + '\n';
+      text += `*BANK DETAILS:*\n${footerText}`;
     }
     
     text += '\n— *Rathi Seeds* 🌱';

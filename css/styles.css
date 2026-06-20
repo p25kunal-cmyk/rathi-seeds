@@ -631,31 +631,57 @@ a { color: var(--clr-primary); text-decoration: none; }
   font-weight: 700;
 }
 
-/* ---------- PDF Export Styling ---------- */
-.pdf-exporting {
-  border: 1px solid #ccc !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  background: #ffffff !important;
-  margin: 0 !important;
-  padding: 30px !important;
-}
-.pdf-exporting *,
-.pdf-exporting .bill-line__label,
-.pdf-exporting .bill-line__value,
-.pdf-exporting .text-dim,
-.pdf-exporting .bill-header__party {
-  color: #000000 !important;
-  opacity: 1 !important;
-  font-weight: 600 !important;
-}
-.pdf-exporting .bill-header__badge {
-  color: #000000 !important;
-  background: #f0f0f0 !important;
-  border: 1px solid #000 !important;
-}
-.pdf-exporting .bill-line {
-  border-bottom-color: #000000 !important;
+/* ---------- Print / PDF Export Styling ---------- */
+@media print {
+  /* Hide everything by default */
+  body.printing-bill * {
+    visibility: hidden;
+  }
+  
+  /* Only show the active bill container */
+  body.printing-bill .bill-container.print-active,
+  body.printing-bill .bill-container.print-active * {
+    visibility: visible;
+  }
+  
+  /* Reset positioning for the printed bill */
+  body.printing-bill .bill-container.print-active {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+    box-shadow: none;
+    border: none;
+    background: transparent;
+  }
+
+  /* Force high contrast black text for crisp vector PDF */
+  body.printing-bill .bill-container.print-active *,
+  body.printing-bill .bill-container.print-active .bill-line__label,
+  body.printing-bill .bill-container.print-active .bill-line__value,
+  body.printing-bill .bill-container.print-active .text-dim,
+  body.printing-bill .bill-container.print-active .bill-header__party {
+    color: #000000 !important;
+    opacity: 1 !important;
+    font-weight: 600 !important;
+  }
+  
+  body.printing-bill .bill-container.print-active .bill-header__badge {
+    color: #000000 !important;
+    background: #f0f0f0 !important;
+    border: 1px solid #000 !important;
+  }
+  
+  body.printing-bill .bill-container.print-active .bill-line {
+    border-bottom-color: #000000 !important;
+  }
+
+  /* Hide buttons during print */
+  body.printing-bill .bill-container.print-active .bill-actions {
+    display: none !important;
+  }
 }
 
 /* ---------- Buttons ---------- */
