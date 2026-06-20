@@ -115,7 +115,9 @@ const ExcelParser = (() => {
           });
 
           // Accumulate totals
-          if (isCurr && t.label.toLowerCase().includes('total')) {
+          const lbl = t.label.toLowerCase();
+          if (isCurr && (lbl.includes('total') || lbl.includes('amount') || lbl.includes('amt')) && 
+              !lbl.includes('booking') && !lbl.includes('balance') && !lbl.includes('rate')) {
             party.totalAmt = Number(val) || 0;
           }
           if (isQty && !isCurr && typeof val === 'number') {
