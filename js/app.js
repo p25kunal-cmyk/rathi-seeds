@@ -280,7 +280,7 @@ const App = (() => {
     filterHTML += '</div>';
 
     // Stats
-    const totalBags = fileData.parties.reduce((s, p) => s + (p.totalBags || 0), 0);
+    const totalBags = Math.round(fileData.parties.reduce((s, p) => s + (p.totalBags || 0), 0) * 100) / 100;
     const totalAmt = fileData.parties.reduce((s, p) => s + (p.totalAmt || 0), 0);
 
     // Party list
@@ -297,7 +297,7 @@ const App = (() => {
             <div class="party-item__detail">
               ${party.center ? `<span>📍 ${party.center}</span>` : ''}
               ${(party.dynamicTags || []).map((t, i) => 
-                `<span class="party-item__tag ${i % 2 !== 0 ? 'party-item__tag--accent' : ''}">${t.shortLabel}: ${t.value}</span>`
+                `<span class="party-item__tag ${i % 2 !== 0 ? 'party-item__tag--accent' : ''}">${t.shortLabel}: ${Math.round(t.value * 100) / 100}</span>`
               ).join('')}
             </div>
           </div>
