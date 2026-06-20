@@ -631,6 +631,22 @@ a { color: var(--clr-primary); text-decoration: none; }
   font-weight: 700;
 }
 
+/* ---------- PDF Export Styling ---------- */
+.pdf-exporting {
+  border: 1px solid #ccc !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: #ffffff !important;
+  margin: 0 !important;
+  padding: 20px !important;
+}
+.pdf-exporting * {
+  color: #000 !important; /* Force high contrast for PDF */
+}
+.pdf-exporting .bill-line {
+  border-bottom-color: #ddd !important;
+}
+
 /* ---------- Buttons ---------- */
 .btn {
   display: inline-flex;

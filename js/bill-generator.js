@@ -177,7 +177,10 @@ const BillGenerator = (() => {
             📋 Copy Text
           </button>
           <button class="btn btn--outline btn--sm" onclick="App.showBillText(${party.id})">
-            📝 View as Text
+            📝 View Text
+          </button>
+          <button class="btn btn--outline btn--sm" onclick="App.downloadBillPDF(${party.id})">
+            📄 PDF
           </button>
         </div>
       </div>`;

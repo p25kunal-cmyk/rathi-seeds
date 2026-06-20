@@ -644,6 +644,47 @@ const App = (() => {
     overlay.classList.add('open');
   }
 
+  function downloadBillPDF(partyId) {
+    if (typeof html2pdf === 'undefined') {
+      showToast("PDF library is still loading, please wait.");
+      return;
+    }
+    
+    const fileData = state.files[state.activeFileIndex];
+    const party = fileData.parties.find(p => p.id === partyId);
+    if (!party) return;
+
+    const element = document.querySelector(`.bill-container[data-party-id="${partyId}"]`);
+    if (!element) return;
+
+    // Temporarily hide the buttons for the PDF
+    const actions = element.querySelector('.bill-actions');
+    if (actions) actions.style.display = 'none';
+    
+    // Add temporary class for any PDF-specific styles (like removing shadow, making boundaries sharper)
+    element.classList.add('pdf-exporting');
+
+    const opt = {
+      margin:       0.5,
+      filename:     `Bill_${party.name.trim().replace(/\s+/g, '_')}.pdf`,
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { scale: 2, useCORS: true },
+      jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+
+    showToast("Generating PDF...");
+    html2pdf().from(element).set(opt).save().then(() => {
+      // Restore UI
+      if (actions) actions.style.display = '';
+      element.classList.remove('pdf-exporting');
+    }).catch(err => {
+      console.error(err);
+      showToast("Failed to generate PDF");
+      if (actions) actions.style.display = '';
+      element.classList.remove('pdf-exporting');
+    });
+  }
+
   function copyAllBills() {
     const fileData = state.files[state.activeFileIndex];
     const selectedParties = fileData.parties.filter(p => state.selectedParties.has(p.id));
@@ -725,6 +766,7 @@ const App = (() => {
     generateSelectedBills,
     copyBillText,
     showBillText,
+    downloadBillPDF,
     copyAllBills,
     closeModal,
     deleteFile,
