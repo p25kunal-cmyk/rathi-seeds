@@ -293,7 +293,7 @@ const App = (() => {
             ${isSelected ? '✓' : ''}
           </div>
           <div class="party-item__info" onclick="App.viewPartyBill(${party.id})">
-            <div class="party-item__name">${party.name.trim()}</div>
+            <div class="party-item__name">${(party.name || 'Unknown').trim()}</div>
             <div class="party-item__detail">
               ${party.center ? `<span>📍 ${party.center}</span>` : ''}
               ${(party.dynamicTags || []).map((t, i) => 
@@ -376,10 +376,11 @@ const App = (() => {
     // Filter by search
     if (state.searchQuery) {
       const q = state.searchQuery.toLowerCase();
-      filtered = filtered.filter(p =>
-        p.name.toLowerCase().includes(q) ||
-        (p.center && p.center.toLowerCase().includes(q))
-      );
+      filtered = filtered.filter(p => {
+        const name = (p.name || '').toLowerCase();
+        const center = (p.center || '').toLowerCase();
+        return name.includes(q) || center.includes(q);
+      });
     }
 
     return filtered;

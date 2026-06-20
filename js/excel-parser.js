@@ -10,9 +10,13 @@ const ExcelParser = (() => {
 
   /* ---- Known sheet-name patterns ---- */
   const SHEET_PATTERNS = [
-    { pattern: /final\s*booking/i,    product: 'Unnati & Samrudhi' },
+    // More specific patterns MUST come before generic ones
     { pattern: /final\s*booking\s*skb/i, product: 'SKB' },
-    { pattern: /soya\s*final/i,       product: 'Soya' },
+    { pattern: /skb\s*nett/i,            product: 'SKB Nett' },
+    { pattern: /savira/i,                product: 'Savira Seeds' },
+    { pattern: /final\s*dispatch/i,      product: 'Final Dispatch' },
+    { pattern: /soya\s*final/i,          product: 'Soya' },
+    { pattern: /final\s*booking/i,       product: 'Unnati & Samrudhi' },
   ];
 
   /**
@@ -69,8 +73,14 @@ const ExcelParser = (() => {
     const parties = [];
     
     for (let r = 2; r <= range.e.r; r++) {
-      const partyName = getCellValue(ws, r, 2); // Column C
-      if (!partyName) continue; // Skip empty rows
+      let partyName = getCellValue(ws, r, 2); // Column C
+      if (!partyName) {
+        // Try column A or B as fallback for differently structured sheets
+        partyName = getCellValue(ws, r, 1) || getCellValue(ws, r, 0);
+      }
+      if (!partyName) continue; // Skip truly empty rows
+      partyName = String(partyName).trim();
+      if (!partyName) continue;
 
       const party = {
         id: parties.length + 1,
