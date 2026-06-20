@@ -1,16 +1,24 @@
-/**
- * app.js — Rathi Seeds Main Application
- *
- * Handles views, navigation, state management, and user interactions.
- * Data persists in localStorage.
- */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDoGpzQqpro0nVW51x9F2VfZ3k6hkLhAZ8",
+  authDomain: "rathi-seeds-bill.firebaseapp.com",
+  projectId: "rathi-seeds-bill",
+  storageBucket: "rathi-seeds-bill.firebasestorage.app",
+  messagingSenderId: "940991039209",
+  appId: "1:940991039209:web:34e95b2747195a41eb5278"
+};
+
+const fbApp = initializeApp(firebaseConfig);
+const auth = getAuth(fbApp);
+const db = getFirestore(fbApp);
 
 const App = (() => {
   'use strict';
 
   /* ============ STATE ============ */
-  const STORAGE_KEY = 'rathiSeeds_data';
-
   let state = {
     files: [],          // Array of parsed file data
     activeView: 'upload',
@@ -24,39 +32,98 @@ const App = (() => {
 
   /* ============ INITIALIZATION ============ */
   function init() {
-    loadState();
+    setupFirebase();
     bindEvents();
     renderNav();
-    switchView(state.files.length > 0 ? 'parties' : 'upload');
+    // Default view shown until auth completes
   }
 
-  /* ============ STORAGE ============ */
+  /* ============ FIREBASE & STORAGE ============ */
+  let dbUnsubscribe = null;
+
+  function setupFirebase() {
+    // Auth Listener
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        document.getElementById('loginView').classList.remove('active');
+        document.getElementById('logoutBtn').style.display = 'inline-flex';
+        loadState(); // Load real-time data when logged in
+      } else {
+        document.getElementById('loginView').classList.add('active');
+        document.getElementById('logoutBtn').style.display = 'none';
+        if (dbUnsubscribe) {
+          dbUnsubscribe();
+          dbUnsubscribe = null;
+        }
+        state.files = []; // Clear local state
+        renderUploadView();
+      }
+    });
+
+    // Login Form Submission
+    document.getElementById('loginForm')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const em = document.getElementById('loginEmail').value;
+      const pw = document.getElementById('loginPassword').value;
+      const errEl = document.getElementById('loginError');
+      errEl.textContent = 'Logging in...';
+      
+      signInWithEmailAndPassword(auth, em, pw)
+        .then(() => { errEl.textContent = ''; })
+        .catch((error) => {
+          console.error("Login failed:", error);
+          errEl.textContent = "Invalid email or password.";
+        });
+    });
+
+    // Logout Button
+    document.getElementById('logoutBtn')?.addEventListener('click', () => {
+      signOut(auth);
+    });
+  }
+
   function loadState() {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
+    if (dbUnsubscribe) dbUnsubscribe();
+    
+    // Listen to company data in real-time
+    const docRef = doc(db, 'companyData', 'main');
+    dbUnsubscribe = onSnapshot(docRef, (docSnap) => {
+      if (docSnap.exists()) {
+        const parsed = docSnap.data();
         state.files = parsed.files || [];
         state.activeFileIndex = parsed.activeFileIndex || 0;
-        
-        // Clear old incompatible data
-        if (state.files.length > 0 && !state.files[0].parties[0].dynamicData) {
-          state.files = [];
-          state.activeFileIndex = 0;
-          saveState();
-        }
+      } else {
+        state.files = [];
+        state.activeFileIndex = 0;
       }
-    } catch (e) {
-      console.warn('Failed to load saved data:', e);
-    }
+      
+      if (state.activeView === 'upload' && state.files.length > 0) {
+        switchView('parties');
+      } else {
+        // Refresh whatever view is open
+        if (state.activeView === 'upload') renderUploadView();
+        if (state.activeView === 'parties') renderPartiesView();
+        if (state.activeView === 'bills') renderBillsView();
+      }
+    }, (err) => {
+      console.error("Firestore Listen Error:", err);
+      if (err.code === 'permission-denied') {
+        alert("You do not have permission to read the company data.");
+      }
+    });
   }
 
   function saveState() {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      if (!auth.currentUser) return;
+      
+      const docRef = doc(db, 'companyData', 'main');
+      setDoc(docRef, {
         files: state.files,
         activeFileIndex: state.activeFileIndex,
-      }));
+        lastUpdated: new Date().toISOString(),
+        updatedBy: auth.currentUser.email
+      }, { merge: true }).catch(e => console.error("Firestore Save Error:", e));
     } catch (e) {
       console.warn('Failed to save data:', e);
     }
@@ -664,5 +731,12 @@ const App = (() => {
   };
 })();
 
+// Expose to window for inline HTML handlers
+window.App = App;
+
 // Initialize on DOM ready
-document.addEventListener('DOMContentLoaded', App.init);
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', App.init);
+} else {
+  App.init();
+}
