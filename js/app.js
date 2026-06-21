@@ -7869,6 +7869,13 @@ window.App = (() => {
     
     bindEvents();
     // listenToCollections(); /* BYPASSED FOR LOCAL DEMO */
+    
+    renderSetupCompanies();
+    renderSetupSeeds();
+    renderPartiesList();
+    renderDashboard();
+    renderBillingView();
+
     switchView('dashboard');
   }
 
@@ -8013,20 +8020,48 @@ window.App = (() => {
       
       let seedLines = '';
       let netTotal = 0;
+      let totalReceived = 0;
+      let totalOutstanding = 0;
 
       bks.forEach(b => {
         const seed = state.seeds.find(s => s.seedId === b.seedId) || { name: b.seedName || "Unknown" };
         netTotal += Number(b.netPayable) || 0;
+        totalReceived += Number(b.totalReceived) || 0;
+        totalOutstanding += Number(b.outstanding) || 0;
+        
         seedLines += `
-          <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.9rem;">
-            <span>${escapeHTML(seed.name)} (${b.bagsFinal} bags @ ₹${b.rate})</span>
-            <strong>${formatCurrency(b.netPayable)}</strong>
+          <div style="font-size:0.9rem; margin-bottom:8px;">
+            <div style="display:flex; justify-content:space-between; font-weight:600;">
+              <span>${escapeHTML(seed.name)} (${b.bagsFinal} bags @ ₹${b.rate})</span>
+              <span>${formatCurrency(b.netPayable)}</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; color:var(--text-dim); font-size:0.8rem;">
+               <span>Gross: ${formatCurrency(b.grossBill)}</span>
+               ${b.netPayable !== b.grossBill ? `<span>Discounted Net: ${formatCurrency(b.netPayable)}</span>` : ''}
+            </div>
           </div>
         `;
       });
 
       // WA Link
-      const textBill = `🌾 *${co.name}*\n------------------\n👤 Party: ${party.name}\n${bks.map(b => `• ${b.seedName || 'Seed'} (${b.bagsFinal} bags): ₹${b.netPayable}`).join('\n')}\n------------------\n💰 *Total: ${formatCurrency(netTotal)}*`;
+      let textBill = `🌾 *${co.name}*\n-----------------------------------\n👤 *Party:* ${party.name}\n`;
+      if (party.center) textBill += `📍 *Center:* ${party.center}\n`;
+      textBill += `\n*DETAILS:*\n`;
+
+      bks.forEach((b, i) => {
+         const seed = state.seeds.find(s => s.seedId === b.seedId) || { name: b.seedName || "Unknown" };
+         textBill += `${i+1}) *${seed.name}* (${b.bagsFinal} bags @ ₹${b.rate})\n   Gross: ${formatCurrency(b.grossBill)}\n`;
+         if (b.netPayable !== b.grossBill) textBill += `   Net: ${formatCurrency(b.netPayable)}\n`;
+      });
+      textBill += `-----------------------------------\n`;
+      textBill += `💰 *TOTAL PAYABLE:* ${formatCurrency(netTotal)}\n`;
+      textBill += `🏦 *RECEIVED:* ${formatCurrency(totalReceived)}\n`;
+      textBill += `✅ *OUTSTANDING:* ${formatCurrency(totalOutstanding)}\n`;
+      if (co.bank) {
+         textBill += `\n*BANK DETAILS:*\n${co.bank}\nA/C: ${co.accountNo}\nIFSC: ${co.ifsc}\n`;
+      }
+      textBill += `\n— *Rathi Seeds* 🌱`;
+      
       const waLink = party.phone ? `https://web.whatsapp.com/send/?phone=${party.phone}&text=${encodeURIComponent(textBill)}` : '#';
 
       billsHTML += `
@@ -8090,7 +8125,7 @@ window.App = (() => {
     
     let detailsHTML = `
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px;">
-        <h2 style="margin:0">\${escapeHTML(partyName)}</h2>
+        <h2 style="margin:0">${escapeHTML(partyName)}</h2>
         <button class="btn btn--outline btn--sm close-modal-btn" onclick="App.closeModals(event)">✕</button>
       </div>
       <div style="max-height: 70vh; overflow-y: auto; padding-right:8px;">
@@ -8102,33 +8137,50 @@ window.App = (() => {
       // Group by company
       const coMap = {};
       pBookings.forEach(b => {
-        const coName = state.companies.find(c => c.coId === b.companyId)?.name || b.companyId;
+        const coName = state.companies.find(c => c.id === b.companyId || c.coId === b.companyId)?.name || b.companyId;
         if (!coMap[coName]) coMap[coName] = [];
         coMap[coName].push(b);
       });
 
       for (const [coName, bks] of Object.entries(coMap)) {
         let netTotal = 0;
+        let totalReceived = 0;
+        let totalOutstanding = 0;
         let seedLines = '';
         bks.forEach(b => {
           netTotal += Number(b.netPayable) || 0;
+          totalReceived += Number(b.totalReceived) || 0;
+          totalOutstanding += Number(b.outstanding) || 0;
           seedLines += `
-            <div style="display:flex; justify-content:space-between; font-size: 0.9rem; margin-bottom:4px;">
-              <span>\${escapeHTML(b.seedName)} (\${b.bagsFinal} bags)</span>
-              <span>\${formatCurrency(b.netPayable)}</span>
+            <div style="font-size: 0.9rem; margin-bottom:8px;">
+              <div style="display:flex; justify-content:space-between; font-weight:600;">
+                <span>${escapeHTML(b.seedName)} (${b.bagsFinal} bags @ ₹${b.rate})</span>
+                <span>Net: ${formatCurrency(b.netPayable)}</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; color:var(--text-dim); font-size:0.8rem;">
+                <span>Gross: ${formatCurrency(b.grossBill)}</span>
+              </div>
             </div>
           `;
         });
         
         detailsHTML += `
           <div class="card" style="margin-bottom: 12px; padding: 12px; background:var(--bg-page);">
-            <h4 style="margin:0 0 8px 0; color: var(--text-primary);">\${escapeHTML(coName)}</h4>
+            <h4 style="margin:0 0 8px 0; color: var(--text-primary);">${escapeHTML(coName)}</h4>
             <div style="padding-bottom:8px; border-bottom: 1px solid var(--border-clr); margin-bottom:8px;">
-              \${seedLines}
+              ${seedLines}
             </div>
-            <div style="display:flex; justify-content:space-between; font-weight:bold;">
-              <span>Total:</span>
-              <span>\${formatCurrency(netTotal)}</span>
+            <div style="display:flex; justify-content:space-between; font-weight:bold; margin-bottom:4px;">
+              <span>Total Payable:</span>
+              <span>${formatCurrency(netTotal)}</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-weight:bold; color:var(--clr-success); margin-bottom:4px;">
+              <span>Received:</span>
+              <span>${formatCurrency(totalReceived)}</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-weight:bold; color:var(--clr-danger);">
+              <span>Outstanding:</span>
+              <span>${formatCurrency(totalOutstanding)}</span>
             </div>
           </div>
         `;
