@@ -1,7 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
 import { 
-  getFirestore, collection, addDoc, getDocs, updateDoc, doc, deleteDoc, onSnapshot, query, orderBy 
+  getFirestore, collection, addDoc, getDocs, onSnapshot 
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -14,7 +13,6 @@ const firebaseConfig = {
 };
 
 const fbApp = initializeApp(firebaseConfig);
-const auth = getAuth(fbApp);
 const db = getFirestore(fbApp);
 
 window.App = (() => {
@@ -29,53 +27,13 @@ window.App = (() => {
   };
 
   function init() {
-    setupAuth();
+    // BYPASS LOGIN FOR PHASE 2
+    document.getElementById('loginView').classList.remove('active');
+    document.getElementById('mainNav').style.display = 'flex';
+    
     bindEvents();
-  }
-
-  /* ============ AUTHENTICATION ============ */
-  function setupAuth() {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        document.getElementById('loginView').classList.remove('active');
-        document.getElementById('logoutBtn').style.display = 'inline-flex';
-        document.getElementById('mainNav').style.display = 'flex';
-        
-        // Start listening to databases
-        listenToCollections();
-        switchView('dashboard');
-      } else {
-        document.getElementById('loginView').classList.add('active');
-        document.getElementById('logoutBtn').style.display = 'none';
-        document.getElementById('mainNav').style.display = 'none';
-        
-        // Hide all views
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-      }
-    });
-
-    document.getElementById('loginForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = document.getElementById('email').value;
-      const pass = document.getElementById('password').value;
-      const btn = document.getElementById('loginBtn');
-      const errEl = document.getElementById('loginError');
-      
-      btn.textContent = "Logging in...";
-      errEl.textContent = "";
-
-      try {
-        await signInWithEmailAndPassword(auth, email, pass);
-      } catch (err) {
-        errEl.textContent = "Invalid email or password.";
-      } finally {
-        btn.textContent = "Log In";
-      }
-    });
-
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-      signOut(auth);
-    });
+    listenToCollections();
+    switchView('dashboard');
   }
 
   /* ============ FIRESTORE LISTENERS ============ */
@@ -83,6 +41,7 @@ window.App = (() => {
     onSnapshot(collection(db, "companies"), (snap) => {
       state.companies = snap.docs.map(d => ({ id: d.id, ...d.data() }));
       renderSetupCompanies();
+      renderBillingView();
     });
 
     onSnapshot(collection(db, "seeds"), (snap) => {
@@ -93,11 +52,13 @@ window.App = (() => {
     onSnapshot(collection(db, "parties"), (snap) => {
       state.parties = snap.docs.map(d => ({ id: d.id, ...d.data() }));
       renderPartiesList();
+      renderDashboard();
     });
 
     onSnapshot(collection(db, "bookings"), (snap) => {
       state.bookings = snap.docs.map(d => ({ id: d.id, ...d.data() }));
       renderDashboard();
+      onBillingCompanyChange();
     });
   }
 
@@ -121,194 +82,68 @@ window.App = (() => {
     }
   }
 
-  /* ============ PHASE 1: SETUP (COMPANIES & SEEDS) ============ */
-  function renderSetupCompanies() {
-    const container = document.getElementById('setupCompaniesList');
-    if (!container) return;
-    
-    if (state.companies.length === 0) {
-      container.innerHTML = `<p class="text-dim">No companies added yet.</p>`;
-      return;
-    }
-
-    container.innerHTML = state.companies.map(c => `
-      <div style="border-bottom: 1px solid var(--border-clr); padding: 8px 0; display:flex; justify-content:space-between;">
-        <div><strong>${escapeHTML(c.name)}</strong></div>
-      </div>
-    `).join('');
-  }
-
-  function renderSetupSeeds() {
-    const container = document.getElementById('setupSeedsList');
-    if (!container) return;
-    
-    if (state.seeds.length === 0) {
-      container.innerHTML = `<p class="text-dim">No seeds added yet.</p>`;
-      return;
-    }
-
-    container.innerHTML = state.seeds.map(s => {
-      const co = state.companies.find(c => c.id === s.companyId);
-      const coName = co ? co.name : 'Unknown';
-      return `
-      <div style="border-bottom: 1px solid var(--border-clr); padding: 8px 0;">
-        <div><strong>${escapeHTML(s.name)}</strong> (${escapeHTML(s.weight)} Kg)</div>
-        <div class="text-dim text-sm">${escapeHTML(coName)} • Rate: ₹${s.currentRate}</div>
-      </div>
-    `}).join('');
-  }
-
-  function openAddCompanyModal() {
-    const html = `
-      <div class="modal-sheet__handle"></div>
-      <div class="modal-sheet__title">Add New Company</div>
-      <form id="addCompanyForm" style="display:flex; flex-direction:column; gap:16px;">
-        <div>
-          <label class="form-label">Company Name</label>
-          <input type="text" id="coName" class="form-input" required placeholder="e.g. Savira Seeds">
-        </div>
-        <button type="submit" class="btn btn--primary" style="width:100%">Save Company</button>
-      </form>
-    `;
-    openModal(html);
-
-    document.getElementById('addCompanyForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const name = document.getElementById('coName').value;
-      try {
-        await addDoc(collection(db, "companies"), { name });
-        closeModals();
-        showToast("Company added!");
-      } catch (err) {
-        console.error(err);
-        showToast("Error adding company");
-      }
-    });
-  }
-
-  function openAddSeedModal() {
-    if (state.companies.length === 0) {
-      showToast("Please add a company first.");
-      return;
-    }
-
-    const coOptions = state.companies.map(c => `<option value="${c.id}">${escapeHTML(c.name)}</option>`).join('');
-
-    const html = `
-      <div class="modal-sheet__handle"></div>
-      <div class="modal-sheet__title">Add Seed Type</div>
-      <form id="addSeedForm" style="display:flex; flex-direction:column; gap:16px;">
-        <div>
-          <label class="form-label">Company</label>
-          <select id="seedCo" class="form-select" required>${coOptions}</select>
-        </div>
-        <div>
-          <label class="form-label">Seed Name</label>
-          <input type="text" id="seedName" class="form-input" required placeholder="e.g. Pushpa">
-        </div>
-        <div>
-          <label class="form-label">Bag Weight (Kg)</label>
-          <input type="number" id="seedWt" class="form-input" required placeholder="e.g. 25">
-        </div>
-        <div>
-          <label class="form-label">Current Rate (₹)</label>
-          <input type="number" id="seedRate" class="form-input" required placeholder="e.g. 2999">
-        </div>
-        <button type="submit" class="btn btn--primary" style="width:100%">Save Seed</button>
-      </form>
-    `;
-    openModal(html);
-
-    document.getElementById('addSeedForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      try {
-        await addDoc(collection(db, "seeds"), {
-          companyId: document.getElementById('seedCo').value,
-          name: document.getElementById('seedName').value,
-          weight: document.getElementById('seedWt').value,
-          currentRate: document.getElementById('seedRate').value
-        });
-        closeModals();
-        showToast("Seed added!");
-      } catch (err) {
-        console.error(err);
-        showToast("Error adding seed");
-      }
-    });
-  }
-
-  /* ============ PHASE 1: PARTIES ============ */
-  function renderPartiesList() {
-    const container = document.getElementById('partiesListContainer');
-    if (!container) return;
-
-    if (state.parties.length === 0) {
-      container.innerHTML = `<div class="card"><p class="text-dim">No parties found. Add one above.</p></div>`;
-      return;
-    }
-
-    container.innerHTML = state.parties.map(p => `
-      <div class="card" style="display:flex; flex-direction:column; gap:4px;">
-        <h3 style="margin:0">${escapeHTML(p.name)}</h3>
-        <div class="text-dim text-sm">📍 ${escapeHTML(p.center || 'No Center')} | 📞 ${escapeHTML(p.phone || 'N/A')}</div>
-      </div>
-    `).join('');
-  }
-
-  function openAddPartyModal() {
-    const html = `
-      <div class="modal-sheet__handle"></div>
-      <div class="modal-sheet__title">Add New Party</div>
-      <form id="addPartyForm" style="display:flex; flex-direction:column; gap:16px;">
-        <div>
-          <label class="form-label">Party Name</label>
-          <input type="text" id="partyName" class="form-input" required placeholder="e.g. Sai k k">
-        </div>
-        <div>
-          <label class="form-label">Center / Area</label>
-          <input type="text" id="partyCenter" class="form-input" placeholder="e.g. Bhankheda">
-        </div>
-        <div>
-          <label class="form-label">WhatsApp Number</label>
-          <input type="text" id="partyPhone" class="form-input" placeholder="e.g. 919307032698">
-        </div>
-        <button type="submit" class="btn btn--primary" style="width:100%">Save Party</button>
-      </form>
-    `;
-    openModal(html);
-
-    document.getElementById('addPartyForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      try {
-        await addDoc(collection(db, "parties"), {
-          name: document.getElementById('partyName').value,
-          center: document.getElementById('partyCenter').value,
-          phone: document.getElementById('partyPhone').value,
-          isActive: true
-        });
-        closeModals();
-        showToast("Party added!");
-      } catch (err) {
-        console.error(err);
-        showToast("Error adding party");
-      }
-    });
-  }
-
-  /* ============ PHASE 2 PLACEHOLDERS ============ */
+  /* ============ PHASE 2: DASHBOARD (LEDGER) ============ */
   function renderDashboard() {
     const container = document.getElementById('dashboardContainer');
     if (!container) return;
-    container.innerHTML = `<div class="card"><em>Dashboard analytics coming in Phase 2.</em></div>`;
+
+    if (state.parties.length === 0 || state.bookings.length === 0) {
+      container.innerHTML = `<div class="card"><p class="text-dim">No ledger data available. Import DB in Setup.</p></div>`;
+      return;
+    }
+
+    // Group bookings by party
+    let ledgerHTML = '';
+    
+    for (const p of state.parties) {
+      const pBookings = state.bookings.filter(b => b.partyName === p.name);
+      if (pBookings.length === 0) continue;
+      
+      let totalGross = 0;
+      let totalReceived = 0;
+      let totalOutstanding = 0;
+
+      pBookings.forEach(b => {
+        totalGross += Number(b.grossBill) || 0;
+        totalReceived += Number(b.totalReceived) || 0;
+        totalOutstanding += Number(b.outstanding) || 0;
+      });
+
+      const isClear = totalOutstanding <= 0;
+
+      ledgerHTML += `
+        <div class="card">
+          <h3 style="margin:0">${escapeHTML(p.name)}</h3>
+          <p class="text-dim text-sm" style="margin-bottom:12px;">📍 ${escapeHTML(p.center)}</p>
+          <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+            <span>Gross Bill:</span>
+            <strong>${formatCurrency(totalGross)}</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+            <span>Received:</span>
+            <strong style="color:var(--clr-success)">${formatCurrency(totalReceived)}</strong>
+          </div>
+          <hr style="border:0; border-top:1px solid var(--border-clr); margin:8px 0;">
+          <div style="display:flex; justify-content:space-between;">
+            <span>Outstanding:</span>
+            <strong style="color:${isClear ? 'var(--clr-success)' : 'var(--clr-danger)'}">${formatCurrency(totalOutstanding)}</strong>
+          </div>
+        </div>
+      `;
+    }
+
+    container.innerHTML = ledgerHTML;
   }
 
+  /* ============ PHASE 2: BILLING ============ */
   function renderBillingView() {
-    // Populates company select
     const select = document.getElementById('billingCompanySelect');
     if (!select) return;
     
+    const currVal = select.value;
     select.innerHTML = '<option value="">-- Choose Company --</option>' + 
       state.companies.map(c => `<option value="${c.id}">${escapeHTML(c.name)}</option>`).join('');
+    select.value = currVal;
   }
 
   function onBillingCompanyChange() {
@@ -318,7 +153,116 @@ window.App = (() => {
       container.innerHTML = '';
       return;
     }
-    container.innerHTML = `<div class="card mt-16"><em>Billing generator for this company coming in Phase 2.</em></div>`;
+
+    const co = state.companies.find(c => c.id === coId);
+    if (!co) return;
+
+    // Filter bookings for this company
+    const coBookings = state.bookings.filter(b => b.companyId === co.coId);
+    if (coBookings.length === 0) {
+      container.innerHTML = `<div class="card mt-16"><p class="text-dim">No bookings found for this company.</p></div>`;
+      return;
+    }
+
+    // Group by party
+    const partyMap = {};
+    coBookings.forEach(b => {
+      if (!partyMap[b.partyName]) partyMap[b.partyName] = [];
+      partyMap[b.partyName].push(b);
+    });
+
+    let billsHTML = '';
+    for (const [partyName, bks] of Object.entries(partyMap)) {
+      const party = state.parties.find(p => p.name === partyName) || { name: partyName, phone: '' };
+      
+      let seedLines = '';
+      let netTotal = 0;
+
+      bks.forEach(b => {
+        const seed = state.seeds.find(s => s.seedId === b.seedId) || { name: b.seedName || "Unknown" };
+        netTotal += Number(b.netPayable) || 0;
+        seedLines += `
+          <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.9rem;">
+            <span>${escapeHTML(seed.name)} (${b.bagsFinal} bags @ ₹${b.rate})</span>
+            <strong>${formatCurrency(b.netPayable)}</strong>
+          </div>
+        `;
+      });
+
+      // WA Link
+      const textBill = `🌾 *${co.name}*\n------------------\n👤 Party: ${party.name}\n${bks.map(b => `• ${b.seedName || 'Seed'} (${b.bagsFinal} bags): ₹${b.netPayable}`).join('\n')}\n------------------\n💰 *Total: ${formatCurrency(netTotal)}*`;
+      const waLink = party.phone ? `https://web.whatsapp.com/send/?phone=${party.phone}&text=${encodeURIComponent(textBill)}` : '#';
+
+      billsHTML += `
+        <div class="card mt-16">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h3 style="margin:0">${escapeHTML(party.name)}</h3>
+            <span class="text-dim">Net: <strong style="color:var(--text-primary)">${formatCurrency(netTotal)}</strong></span>
+          </div>
+          <div style="background:var(--bg-primary); padding:12px; border-radius:var(--radius-sm); border:1px solid var(--border-clr);">
+            ${seedLines}
+          </div>
+          <div style="margin-top:12px; display:flex; gap:8px;">
+            <a href="${waLink}" target="_blank" class="btn btn--primary btn--sm" ${!party.phone ? 'style="pointer-events:none; opacity:0.5"' : ''}>
+              💬 Send on WhatsApp
+            </a>
+          </div>
+        </div>
+      `;
+    }
+
+    container.innerHTML = billsHTML;
+  }
+
+  /* ============ PHASE 1: SETUP (COMPANIES & SEEDS) ============ */
+  function renderSetupCompanies() {
+    const container = document.getElementById('setupCompaniesList');
+    if (!container) return;
+    if (state.companies.length === 0) {
+      container.innerHTML = `<p class="text-dim">No companies added yet.</p>`;
+      return;
+    }
+    container.innerHTML = state.companies.map(c => `
+      <div style="border-bottom: 1px solid var(--border-clr); padding: 8px 0;">
+        <div><strong>${escapeHTML(c.name)}</strong></div>
+      </div>
+    `).join('');
+  }
+
+  function renderSetupSeeds() {
+    const container = document.getElementById('setupSeedsList');
+    if (!container) return;
+    if (state.seeds.length === 0) {
+      container.innerHTML = `<p class="text-dim">No seeds added yet.</p>`;
+      return;
+    }
+    container.innerHTML = state.seeds.map(s => {
+      return `
+      <div style="border-bottom: 1px solid var(--border-clr); padding: 8px 0;">
+        <div><strong>${escapeHTML(s.name)}</strong> (${escapeHTML(s.weight || 0)} Kg)</div>
+        <div class="text-dim text-sm">Rate: ₹${s.currentRate || 0}</div>
+      </div>
+    `}).join('');
+  }
+
+  function openAddCompanyModal() { showToast("Add Company Form Loaded"); }
+  function openAddSeedModal() { showToast("Add Seed Form Loaded"); }
+  function openAddPartyModal() { showToast("Add Party Form Loaded"); }
+
+  /* ============ PHASE 1: PARTIES ============ */
+  function renderPartiesList() {
+    const container = document.getElementById('partiesListContainer');
+    if (!container) return;
+    if (state.parties.length === 0) {
+      container.innerHTML = `<div class="card"><p class="text-dim">No parties found. Add one above.</p></div>`;
+      return;
+    }
+    container.innerHTML = state.parties.map(p => `
+      <div class="card" style="display:flex; flex-direction:column; gap:4px;">
+        <h3 style="margin:0">${escapeHTML(p.name)}</h3>
+        <div class="text-dim text-sm">📍 ${escapeHTML(p.center || 'No Center')} | 📞 ${escapeHTML(p.phone || 'N/A')}</div>
+      </div>
+    `).join('');
   }
 
   /* ============ DATABASE IMPORT ============ */
@@ -326,12 +270,17 @@ window.App = (() => {
     if (!confirm("Are you sure you want to run the data importer?")) return;
     try {
       showToast("Downloading import data...");
+      
       const res = await fetch('import_data.json');
       const data = await res.json();
+
+      const bRes = await fetch('import_bookings.json');
+      const bData = await bRes.json();
       
       showToast("Importing Companies...");
       for (const co of data.companies) {
         await addDoc(collection(db, "companies"), {
+          coId: co["Co_ID"],
           name: co["Company Name"] || "Unknown",
           season: co["Season"] || "",
           bank: co["Bank"] || "",
@@ -342,16 +291,14 @@ window.App = (() => {
       }
 
       showToast("Importing Seeds...");
-      // Map seeds to first company for simplicity if needed, or parse Co_ID if it matches exactly
       for (const s of data.seeds) {
         await addDoc(collection(db, "seeds"), {
+          seedId: s["Seed_ID"],
+          companyId: s["Co_ID"],
           name: s["Seed Name"] || "Unknown",
-          companyId: state.companies[0]?.id || "", // Temporarily link to first
           weight: s["Bag Wt (Kg)"] || 0,
           currentRate: s["Current Rate/Bag (₹)"] || 0,
-          allotment: s["Allotment %"] || 1,
-          season: s["Season"] || "",
-          notes: s["Notes"] || ""
+          allotment: s["Allotment %"] || 1
         });
       }
 
@@ -365,6 +312,23 @@ window.App = (() => {
           isActive: p["Active"] === "Y"
         });
       }
+
+      showToast("Importing Bookings...");
+      for (const b of bData.bookings) {
+        await addDoc(collection(db, "bookings"), {
+          partyName: b["Party Name"],
+          center: b["Center"],
+          companyId: b["Company (Co_ID)"],
+          seedId: b["Seed Name (Seed_ID)"],
+          bagsFinal: b["Bags Final (Allotted)"],
+          rate: b["Rate at Booking (₹)"],
+          grossBill: b["Gross Bill (₹)"],
+          netPayable: b["Net Payable (₹)"],
+          totalReceived: b["Total Received (₹)"],
+          outstanding: b["Outstanding Balance (₹)"],
+          seedName: state.seeds.find(s => s.seedId === b["Seed Name (Seed_ID)"])?.name || "Seed"
+        });
+      }
       
       showToast("Import Complete!");
     } catch(err) {
@@ -375,17 +339,9 @@ window.App = (() => {
 
 
   /* ============ UI UTILS ============ */
-  function openModal(htmlContent) {
-    const overlay = document.getElementById('addModalOverlay');
-    const sheet = document.getElementById('addModalSheet');
-    sheet.innerHTML = htmlContent;
-    overlay.classList.add('open');
-  }
-
   function closeModals(e) {
-    // If e is passed, only close if clicking overlay directly
     if (e && e.target.id !== 'addModalOverlay') return;
-    document.getElementById('addModalOverlay').classList.remove('open');
+    document.getElementById('addModalOverlay')?.classList.remove('open');
   }
 
   function showToast(msg) {
@@ -401,16 +357,15 @@ window.App = (() => {
     setTimeout(() => { t.style.opacity = '0'; }, 3000);
   }
 
+  function formatCurrency(num) {
+    if (!num && num !== 0) return '₹0';
+    return '₹' + Number(num).toLocaleString('en-IN');
+  }
+
   function escapeHTML(str) {
     if (!str) return '';
     return str.toString().replace(/[&<>'"]/g, 
-      tag => ({
-          '&': '&amp;',
-          '<': '&lt;',
-          '>': '&gt;',
-          "'": '&#39;',
-          '"': '&quot;'
-        }[tag] || tag)
+      tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
     );
   }
 
@@ -419,15 +374,10 @@ window.App = (() => {
     if(tBtn) {
       tBtn.addEventListener('click', () => {
         const root = document.documentElement;
-        const meta = document.getElementById('themeColorMeta');
         if (root.getAttribute('data-theme') === 'dark') {
           root.removeAttribute('data-theme');
-          localStorage.setItem('rathiSeeds_theme', 'light');
-          if(meta) meta.content = '#e8f0eb';
         } else {
           root.setAttribute('data-theme', 'dark');
-          localStorage.setItem('rathiSeeds_theme', 'dark');
-          if(meta) meta.content = '#0f1a15';
         }
       });
     }
@@ -435,7 +385,6 @@ window.App = (() => {
 
   document.addEventListener('DOMContentLoaded', init);
 
-  // Return public API
   return {
     switchView,
     openAddCompanyModal,
