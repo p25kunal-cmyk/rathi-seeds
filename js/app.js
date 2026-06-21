@@ -8091,7 +8091,7 @@ window.App = (() => {
     let detailsHTML = \`
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px;">
         <h2 style="margin:0">\${escapeHTML(partyName)}</h2>
-        <button class="btn btn--outline btn--sm" onclick="App.closeModals(event)">✕</button>
+        <button class="btn btn--outline btn--sm close-modal-btn" onclick="App.closeModals(event)">✕</button>
       </div>
       <div style="max-height: 70vh; overflow-y: auto; padding-right:8px;">
     \`;
