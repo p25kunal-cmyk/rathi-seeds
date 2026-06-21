@@ -8088,16 +8088,16 @@ window.App = (() => {
   function openPartyDetailModal(partyName) {
     const pBookings = state.bookings.filter(b => b.partyName === partyName);
     
-    let detailsHTML = \`
+    let detailsHTML = `
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px;">
         <h2 style="margin:0">\${escapeHTML(partyName)}</h2>
         <button class="btn btn--outline btn--sm close-modal-btn" onclick="App.closeModals(event)">✕</button>
       </div>
       <div style="max-height: 70vh; overflow-y: auto; padding-right:8px;">
-    \`;
+    `;
 
     if (pBookings.length === 0) {
-      detailsHTML += \`<p class="text-dim">No transactions found.</p></div>\`;
+      detailsHTML += `<p class="text-dim">No transactions found.</p></div>`;
     } else {
       // Group by company
       const coMap = {};
@@ -8112,15 +8112,15 @@ window.App = (() => {
         let seedLines = '';
         bks.forEach(b => {
           netTotal += Number(b.netPayable) || 0;
-          seedLines += \`
+          seedLines += `
             <div style="display:flex; justify-content:space-between; font-size: 0.9rem; margin-bottom:4px;">
               <span>\${escapeHTML(b.seedName)} (\${b.bagsFinal} bags)</span>
               <span>\${formatCurrency(b.netPayable)}</span>
             </div>
-          \`;
+          `;
         });
         
-        detailsHTML += \`
+        detailsHTML += `
           <div class="card" style="margin-bottom: 12px; padding: 12px; background:var(--bg-page);">
             <h4 style="margin:0 0 8px 0; color: var(--text-primary);">\${escapeHTML(coName)}</h4>
             <div style="padding-bottom:8px; border-bottom: 1px solid var(--border-clr); margin-bottom:8px;">
@@ -8131,9 +8131,9 @@ window.App = (() => {
               <span>\${formatCurrency(netTotal)}</span>
             </div>
           </div>
-        \`;
+        `;
       }
-      detailsHTML += \`</div>\`;
+      detailsHTML += `</div>`;
     }
 
     const sheet = document.getElementById('addModalSheet');
