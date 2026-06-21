@@ -7949,7 +7949,7 @@ window.App = (() => {
 
       ledgerHTML += `
         <div class="card">
-          <h3 style="margin:0">${escapeHTML(p.name)}</h3>
+          <h3 style="margin:0; cursor:pointer; color:var(--clr-primary);" onclick="App.openPartyDetailModal('${escapeHTML(p.name).replace(/'/g, "\\'")}')">${escapeHTML(p.name)} 🔗</h3>
           <p class="text-dim text-sm" style="margin-bottom:12px;">📍 ${escapeHTML(p.center)}</p>
           <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
             <span>Gross Bill:</span>
@@ -8085,6 +8085,64 @@ window.App = (() => {
   function openAddSeedModal() { showToast("Add Seed Form Loaded"); }
   function openAddPartyModal() { showToast("Add Party Form Loaded"); }
 
+  function openPartyDetailModal(partyName) {
+    const pBookings = state.bookings.filter(b => b.partyName === partyName);
+    
+    let detailsHTML = \`
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px;">
+        <h2 style="margin:0">\${escapeHTML(partyName)}</h2>
+        <button class="btn btn--outline btn--sm" onclick="App.closeModals(event)">✕</button>
+      </div>
+      <div style="max-height: 70vh; overflow-y: auto; padding-right:8px;">
+    \`;
+
+    if (pBookings.length === 0) {
+      detailsHTML += \`<p class="text-dim">No transactions found.</p></div>\`;
+    } else {
+      // Group by company
+      const coMap = {};
+      pBookings.forEach(b => {
+        const coName = state.companies.find(c => c.coId === b.companyId)?.name || b.companyId;
+        if (!coMap[coName]) coMap[coName] = [];
+        coMap[coName].push(b);
+      });
+
+      for (const [coName, bks] of Object.entries(coMap)) {
+        let netTotal = 0;
+        let seedLines = '';
+        bks.forEach(b => {
+          netTotal += Number(b.netPayable) || 0;
+          seedLines += \`
+            <div style="display:flex; justify-content:space-between; font-size: 0.9rem; margin-bottom:4px;">
+              <span>\${escapeHTML(b.seedName)} (\${b.bagsFinal} bags)</span>
+              <span>\${formatCurrency(b.netPayable)}</span>
+            </div>
+          \`;
+        });
+        
+        detailsHTML += \`
+          <div class="card" style="margin-bottom: 12px; padding: 12px; background:var(--bg-page);">
+            <h4 style="margin:0 0 8px 0; color: var(--text-primary);">\${escapeHTML(coName)}</h4>
+            <div style="padding-bottom:8px; border-bottom: 1px solid var(--border-clr); margin-bottom:8px;">
+              \${seedLines}
+            </div>
+            <div style="display:flex; justify-content:space-between; font-weight:bold;">
+              <span>Total:</span>
+              <span>\${formatCurrency(netTotal)}</span>
+            </div>
+          </div>
+        \`;
+      }
+      detailsHTML += \`</div>\`;
+    }
+
+    const sheet = document.getElementById('addModalSheet');
+    if (sheet) {
+      sheet.innerHTML = detailsHTML;
+      document.getElementById('addModalOverlay').classList.add('open');
+    }
+  }
+
   /* ============ PHASE 1: PARTIES ============ */
   function renderPartiesList() {
     const container = document.getElementById('partiesListContainer');
@@ -8095,7 +8153,7 @@ window.App = (() => {
     }
     container.innerHTML = state.parties.map(p => `
       <div class="card" style="display:flex; flex-direction:column; gap:4px;">
-        <h3 style="margin:0">${escapeHTML(p.name)}</h3>
+        <h3 style="margin:0; cursor:pointer; color:var(--clr-primary);" onclick="App.openPartyDetailModal('${escapeHTML(p.name).replace(/'/g, "\\'")}')">${escapeHTML(p.name)} 🔗</h3>
         <div class="text-dim text-sm">📍 ${escapeHTML(p.center || 'No Center')} | 📞 ${escapeHTML(p.phone || 'N/A')}</div>
       </div>
     `).join('');
@@ -8226,6 +8284,7 @@ window.App = (() => {
     openAddCompanyModal,
     openAddSeedModal,
     openAddPartyModal,
+    openPartyDetailModal,
     closeModals,
     onBillingCompanyChange,
     importDatabase
