@@ -61,9 +61,13 @@
     <!-- ===== NAVIGATION ===== -->
     <nav class="nav-tabs" id="mainNav">
       <button class="nav-btn active" onclick="App.switchView('dashboard')">📊 Dashboard</button>
-      <button class="nav-btn" onclick="App.switchView('billing')">🧾 Billing Center</button>
       <button class="nav-btn" onclick="App.switchView('parties')">👥 Parties</button>
-      <button class="nav-btn" onclick="App.switchView('setup')">⚙️ Setup</button>
+      <button class="nav-btn" onclick="App.switchView('companies')">🏢 Companies</button>
+      <button class="nav-btn" onclick="App.switchView('bookings')">📝 Bookings</button>
+      <button class="nav-btn" onclick="App.switchView('payments')">💳 Payments</button>
+      <button class="nav-btn" onclick="App.switchView('billing')">🧾 Bill Generator</button>
+      <button class="nav-btn" onclick="App.switchView('bulkbills')">📤 Bulk Bills</button>
+      <button class="nav-btn" onclick="App.switchView('setup')">⚙️ Masters</button>
     </nav>
 
     <!-- ===== MAIN CONTENT ===== -->
@@ -78,24 +82,7 @@
         </div>
       </section>
 
-      <!-- 2) BILLING VIEW -->
-      <section id="billingView" class="view">
-        <h1 class="section-title">Billing Center</h1>
-        <p class="section-subtitle">Generate bills and send to WhatsApp.</p>
-        
-        <div class="card mb-16">
-          <label class="form-label">Select Company</label>
-          <select id="billingCompanySelect" class="form-select" onchange="App.onBillingCompanyChange()">
-            <option value="">-- Choose Company --</option>
-          </select>
-        </div>
-
-        <div id="billingPartiesContainer">
-          <!-- Populated by JS after company selection -->
-        </div>
-      </section>
-
-      <!-- 3) PARTIES VIEW -->
+      <!-- 2) PARTIES VIEW -->
       <section id="partiesView" class="view">
         <div class="action-bar mb-16">
           <div>
@@ -109,12 +96,67 @@
         </div>
       </section>
 
-      <!-- 4) SETUP VIEW -->
+      <!-- 3) COMPANIES VIEW -->
+      <section id="companiesView" class="view">
+        <h1 class="section-title">Company View</h1>
+        <p class="section-subtitle">Everything about a selected company.</p>
+        <div id="companiesContainer"></div>
+      </section>
+
+      <!-- 4) BOOKINGS VIEW -->
+      <section id="bookingsView" class="view">
+        <div class="action-bar mb-16">
+          <div>
+            <h1 class="section-title">Bookings Ledger</h1>
+            <p class="section-subtitle">Manage all individual seed bookings.</p>
+          </div>
+          <button class="btn btn--primary" onclick="App.openAddBookingModal()">+ Add Booking</button>
+        </div>
+        <div id="bookingsContainer"></div>
+      </section>
+
+      <!-- 5) PAYMENTS VIEW -->
+      <section id="paymentsView" class="view">
+        <div class="action-bar mb-16">
+          <div>
+            <h1 class="section-title">Payments Ledger</h1>
+            <p class="section-subtitle">Manage all incoming payments.</p>
+          </div>
+          <button class="btn btn--primary" onclick="App.openAddPaymentModal()">+ Add Payment</button>
+        </div>
+        <div id="paymentsContainer"></div>
+      </section>
+
+      <!-- 6) BILLING VIEW -->
+      <section id="billingView" class="view">
+        <h1 class="section-title">Bill Generator</h1>
+        <p class="section-subtitle">Generate detailed bills and send to WhatsApp.</p>
+        
+        <div class="card mb-16">
+          <label class="form-label">Select Company</label>
+          <select id="billingCompanySelect" class="form-select" onchange="App.onBillingCompanyChange()">
+            <option value="">-- Choose Company --</option>
+          </select>
+        </div>
+
+        <div id="billingPartiesContainer">
+          <!-- Populated by JS after company selection -->
+        </div>
+      </section>
+
+      <!-- 7) BULK BILLS VIEW -->
+      <section id="bulkbillsView" class="view">
+        <h1 class="section-title">Bulk Bills</h1>
+        <p class="section-subtitle">Send bills to all parties for a company.</p>
+        <div id="bulkbillsContainer"></div>
+      </section>
+
+      <!-- 8) SETUP VIEW (MASTERS) -->
       <section id="setupView" class="view">
         <div class="action-bar mb-16">
           <div>
-            <h1 class="section-title">Database Setup</h1>
-            <p class="section-subtitle">Manage Companies and Seed Rates.</p>
+            <h1 class="section-title">Database Setup (Masters)</h1>
+            <p class="section-subtitle">Manage lookup tables for the business.</p>
           </div>
         </div>
 
@@ -129,6 +171,11 @@
             <h3>Seed Types</h3>
             <button class="btn btn--outline btn--sm mt-8" onclick="App.openAddSeedModal()">+ Add Seed</button>
             <div id="setupSeedsList" class="mt-16"></div>
+          </div>
+          <div class="card">
+            <h3>CD Rates</h3>
+            <button class="btn btn--outline btn--sm mt-8" onclick="App.openAddCDRateModal()">+ Add CD Rate</button>
+            <div id="setupCDRatesList" class="mt-16"></div>
           </div>
         </div>
       </section>

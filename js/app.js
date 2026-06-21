@@ -7859,8 +7859,61 @@ window.App = (() => {
       "outstanding": 0,
       "seedName": "Baliraja"
     }
+  ],
+  "cdRates": [
+    { "id": "CD01", "coId": "CO01", "round": "1st CD", "rate": 0.08, "deadline": "30-Apr-2026" },
+    { "id": "CD02", "coId": "CO01", "round": "2nd CD", "rate": 0.06, "deadline": "20-May-2026" },
+    { "id": "CD04", "coId": "CO02", "round": "1st CD", "rate": 0.08, "deadline": "30-Apr-2026" },
+    { "id": "CD05", "coId": "CO02", "round": "2nd CD", "rate": 0.06, "deadline": "20-May-2026" },
+    { "id": "CD06", "coId": "CO03", "round": "1st CD", "rate": 0.07, "deadline": "15-Apr-2026" },
+    { "id": "CD07", "coId": "CO03", "round": "2nd CD", "rate": 0.06, "deadline": "22-Apr-2026" },
+    { "id": "CD08", "coId": "CO03", "round": "3rd CD", "rate": 0.05, "deadline": null }
+  ],
+  "payments": [
+    { "id": "PM001", "partyId": "Maa Bhavani", "coId": "CO01", "type": "Advance Booking", "amount": 25000, "date": "2026-01-15", "ref": "HDFC001", "cleared": true },
+    { "id": "PM002", "partyId": "Maa Bhavani", "coId": "CO01", "type": "1st CD Payment",  "amount": 50000, "date": "2026-01-20", "ref": "HDFC002", "cleared": true }
   ]
 };
+
+  /* ============ BUSINESS MATH UTILITIES ============ */
+  function getGrossBill(booking) {
+    return (booking.bagsFinal || 0) * (booking.rateAtBooking || booking.rate || 0);
+  }
+
+  function getBalanceForCD(booking) {
+    return getGrossBill(booking) - (booking.bookingDis || 0);
+  }
+
+  function getCDDiscount(booking) {
+    if (!booking.cdRound) return 0;
+    const cd = state.cdRates.find(c => c.id === booking.cdRound);
+    if (!cd) return 0;
+    return Math.round(getBalanceForCD(booking) * cd.rate);
+  }
+
+  function getNetPayable(booking) {
+    return getBalanceForCD(booking) - getCDDiscount(booking);
+  }
+
+  function getTotalReceived(partyName, coId) {
+    return state.payments
+      .filter(p => p.partyId === partyName && p.coId === coId && p.cleared)
+      .reduce((sum, p) => sum + p.amount, 0);
+  }
+
+  function getOutstandingBalance(partyName, coId) {
+    const totalNet = state.bookings
+      .filter(b => b.partyName === partyName && b.companyId === coId)
+      .reduce((sum, b) => sum + getNetPayable(b), 0);
+    const totalPaid = getTotalReceived(partyName, coId);
+    return totalNet - totalPaid;
+  }
+
+  function getPartyStatus(outstanding, received) {
+    if (outstanding <= 0 && received > 0) return "Cleared";
+    if (received > 0) return "Partial";
+    return "Pending";
+  }
 
   function init() {
     // BYPASS LOGIN FOR PHASE 2
@@ -7919,10 +7972,32 @@ window.App = (() => {
     if (viewId === 'dashboard') renderDashboard();
     if (viewId === 'billing') renderBillingView();
     if (viewId === 'parties') renderPartiesList();
+    if (viewId === 'companies') renderCompanyView();
+    if (viewId === 'bookings') renderBookingsView();
+    if (viewId === 'payments') renderPaymentsView();
+    if (viewId === 'bulkbills') renderBulkBillsView();
     if (viewId === 'setup') {
       renderSetupCompanies();
       renderSetupSeeds();
+      renderSetupCDRates();
     }
+  }
+
+  function renderCompanyView() {
+    document.getElementById('companiesContainer').innerHTML = '<p class="text-dim">Company View coming soon...</p>';
+  }
+  function renderBookingsView() {
+    document.getElementById('bookingsContainer').innerHTML = '<p class="text-dim">Bookings Ledger coming soon...</p>';
+  }
+  function renderPaymentsView() {
+    document.getElementById('paymentsContainer').innerHTML = '<p class="text-dim">Payments Ledger coming soon...</p>';
+  }
+  function renderBulkBillsView() {
+    document.getElementById('bulkbillsContainer').innerHTML = '<p class="text-dim">Bulk Bills coming soon...</p>';
+  }
+  function renderSetupCDRates() {
+    const el = document.getElementById('setupCDRatesList');
+    if (el) el.innerHTML = '<p class="text-dim">CD Rates coming soon...</p>';
   }
 
   /* ============ PHASE 2: DASHBOARD (LEDGER) ============ */
@@ -7947,9 +8022,13 @@ window.App = (() => {
       let totalOutstanding = 0;
 
       pBookings.forEach(b => {
-        totalGross += Number(b.grossBill) || 0;
-        totalReceived += Number(b.totalReceived) || 0;
-        totalOutstanding += Number(b.outstanding) || 0;
+        totalGross += getGrossBill(b);
+      });
+
+      const uniqueCoIds = [...new Set(pBookings.map(b => b.companyId))];
+      uniqueCoIds.forEach(coId => {
+         totalReceived += getTotalReceived(p.name, coId);
+         totalOutstanding += getOutstandingBalance(p.name, coId);
       });
 
       const isClear = totalOutstanding <= 0;
@@ -8025,23 +8104,28 @@ window.App = (() => {
 
       bks.forEach(b => {
         const seed = state.seeds.find(s => s.seedId === b.seedId) || { name: b.seedName || "Unknown" };
-        netTotal += Number(b.netPayable) || 0;
+        const gross = getGrossBill(b);
+        const net = getNetPayable(b);
+        
+        netTotal += net;
         totalReceived += Number(b.totalReceived) || 0;
-        totalOutstanding += Number(b.outstanding) || 0;
         
         seedLines += `
           <div style="font-size:0.9rem; margin-bottom:8px;">
             <div style="display:flex; justify-content:space-between; font-weight:600;">
-              <span>${escapeHTML(seed.name)} (${b.bagsFinal} bags @ ₹${b.rate})</span>
-              <span>${formatCurrency(b.netPayable)}</span>
+              <span>${escapeHTML(seed.name)} (${b.bagsFinal} bags @ ₹${b.rateAtBooking || b.rate || 0})</span>
+              <span>${formatCurrency(net)}</span>
             </div>
             <div style="display:flex; justify-content:space-between; color:var(--text-dim); font-size:0.8rem;">
-               <span>Gross: ${formatCurrency(b.grossBill)}</span>
-               ${b.netPayable !== b.grossBill ? `<span>Discounted Net: ${formatCurrency(b.netPayable)}</span>` : ''}
+               <span>Gross: ${formatCurrency(gross)}</span>
+               ${net !== gross ? `<span>Discounted Net: ${formatCurrency(net)}</span>` : ''}
             </div>
           </div>
         `;
       });
+
+      totalReceived = getTotalReceived(party.name, co.id || co.coId);
+      totalOutstanding = getOutstandingBalance(party.name, co.id || co.coId);
 
       // WA Link
       let textBill = `🌾 *${co.name}*\n-----------------------------------\n👤 *Party:* ${party.name}\n`;
@@ -8050,8 +8134,10 @@ window.App = (() => {
 
       bks.forEach((b, i) => {
          const seed = state.seeds.find(s => s.seedId === b.seedId) || { name: b.seedName || "Unknown" };
-         textBill += `${i+1}) *${seed.name}* (${b.bagsFinal} bags @ ₹${b.rate})\n   Gross: ${formatCurrency(b.grossBill)}\n`;
-         if (b.netPayable !== b.grossBill) textBill += `   Net: ${formatCurrency(b.netPayable)}\n`;
+         const gross = getGrossBill(b);
+         const net = getNetPayable(b);
+         textBill += `${i+1}) *${seed.name}* (${b.bagsFinal} bags @ ₹${b.rateAtBooking || b.rate || 0})\n   Gross: ${formatCurrency(gross)}\n`;
+         if (net !== gross) textBill += `   Net: ${formatCurrency(net)}\n`;
       });
       textBill += `-----------------------------------\n`;
       textBill += `💰 *TOTAL PAYABLE:* ${formatCurrency(netTotal)}\n`;
@@ -8148,22 +8234,26 @@ window.App = (() => {
         let totalOutstanding = 0;
         let seedLines = '';
         bks.forEach(b => {
-          netTotal += Number(b.netPayable) || 0;
-          totalReceived += Number(b.totalReceived) || 0;
-          totalOutstanding += Number(b.outstanding) || 0;
+          const gross = getGrossBill(b);
+          const net = getNetPayable(b);
+          
+          netTotal += net;
           seedLines += `
             <div style="font-size: 0.9rem; margin-bottom:8px;">
               <div style="display:flex; justify-content:space-between; font-weight:600;">
-                <span>${escapeHTML(b.seedName)} (${b.bagsFinal} bags @ ₹${b.rate})</span>
-                <span>Net: ${formatCurrency(b.netPayable)}</span>
+                <span>${escapeHTML(b.seedName)} (${b.bagsFinal} bags @ ₹${b.rateAtBooking || b.rate || 0})</span>
+                <span>Net: ${formatCurrency(net)}</span>
               </div>
               <div style="display:flex; justify-content:space-between; color:var(--text-dim); font-size:0.8rem;">
-                <span>Gross: ${formatCurrency(b.grossBill)}</span>
+                <span>Gross: ${formatCurrency(gross)}</span>
               </div>
             </div>
           `;
         });
         
+        totalReceived = getTotalReceived(partyName, bks[0].companyId);
+        totalOutstanding = getOutstandingBalance(partyName, bks[0].companyId);
+
         detailsHTML += `
           <div class="card" style="margin-bottom: 12px; padding: 12px; background:var(--bg-page);">
             <h4 style="margin:0 0 8px 0; color: var(--text-primary);">${escapeHTML(coName)}</h4>
