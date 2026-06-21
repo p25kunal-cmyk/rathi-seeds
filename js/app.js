@@ -7959,15 +7959,29 @@ window.App = (() => {
   }
 
   /* ============ NAVIGATION ============ */
-  function switchView(viewId) {
+  function switchView(viewId, title = '') {
     state.activeView = viewId;
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
 
     document.getElementById(viewId + 'View')?.classList.add('active');
     
-    const activeBtn = Array.from(document.querySelectorAll('.nav-btn')).find(b => b.textContent.toLowerCase().includes(viewId.substring(0,4)));
+    // Update active button
+    const activeBtn = Array.from(document.querySelectorAll('.nav-btn')).find(b => {
+      const onclick = b.getAttribute('onclick') || '';
+      return onclick.includes(`switchView('${viewId}'`);
+    });
     if (activeBtn) activeBtn.classList.add('active');
+
+    // Update Header Title
+    const headerTitle = document.getElementById('topHeaderTitle');
+    if (headerTitle && title) {
+      headerTitle.textContent = title;
+    }
+    
+    // Close sidebar on mobile
+    document.getElementById('sidebar')?.classList.remove('open');
+    document.getElementById('sidebarBackdrop')?.classList.remove('open');
 
     if (viewId === 'dashboard') renderDashboard();
     if (viewId === 'billing') renderBillingView();
@@ -7987,17 +8001,81 @@ window.App = (() => {
     document.getElementById('companiesContainer').innerHTML = '<p class="text-dim">Company View coming soon...</p>';
   }
   function renderBookingsView() {
-    document.getElementById('bookingsContainer').innerHTML = '<p class="text-dim">Bookings Ledger coming soon...</p>';
+    const el = document.getElementById('bookingsContainer');
+    if (!el) return;
+    if (state.bookings.length === 0) {
+       el.innerHTML = '<p class="text-dim">No bookings found.</p>';
+       return;
+    }
+    el.innerHTML = state.bookings.map(b => {
+       const co = state.companies.find(c => c.coId === b.companyId || c.id === b.companyId) || { name: b.companyId };
+       const seed = state.seeds.find(s => s.seedId === b.seedId) || { name: b.seedName };
+       const gross = getGrossBill(b);
+       const net = getNetPayable(b);
+
+       return `
+         <div class="card" style="margin-bottom:12px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+               <h4 style="margin:0">${escapeHTML(b.partyName)}</h4>
+               <strong style="color:var(--clr-primary);">${formatCurrency(net)}</strong>
+            </div>
+            <div class="text-dim text-sm" style="margin-bottom:8px;">${escapeHTML(co.name)} • ${escapeHTML(seed.name)}</div>
+            <div style="display:flex; justify-content:space-between; font-size:0.85rem; padding-top:8px; border-top:1px dashed var(--border-clr);">
+               <span>Bags: <strong>${b.bagsFinal}</strong> @ ₹${b.rateAtBooking || b.rate || 0}</span>
+               <span>Gross: ${formatCurrency(gross)}</span>
+            </div>
+            ${b.cdRound ? `<div style="text-align:right; font-size:0.8rem; color:var(--text-dim); margin-top:4px;">CD Round: ${b.cdRound}</div>` : ''}
+         </div>
+       `;
+    }).join('');
   }
   function renderPaymentsView() {
-    document.getElementById('paymentsContainer').innerHTML = '<p class="text-dim">Payments Ledger coming soon...</p>';
+    const el = document.getElementById('paymentsContainer');
+    if (!el) return;
+    if (!state.payments || state.payments.length === 0) {
+       el.innerHTML = '<p class="text-dim">No payments found.</p>';
+       return;
+    }
+    el.innerHTML = state.payments.map(p => {
+       const co = state.companies.find(c => c.coId === p.coId || c.id === p.coId) || { name: p.coId };
+       return `
+         <div class="card" style="margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+               <h4 style="margin:0">${escapeHTML(p.partyId)}</h4>
+               <div class="text-dim text-sm">${escapeHTML(co.name)} • ${escapeHTML(p.type)}</div>
+               <div class="text-dim text-sm" style="margin-top:4px;">📅 ${escapeHTML(p.date)} | Ref: ${escapeHTML(p.ref)}</div>
+            </div>
+            <div style="text-align:right;">
+               <strong style="color:var(--clr-success); font-size:1.1rem;">${formatCurrency(p.amount)}</strong>
+               <div class="text-sm mt-4">
+                  ${p.cleared ? '<span style="background:var(--clr-success); color:white; padding:2px 8px; border-radius:12px; font-size:0.7rem;">Cleared</span>' : '<span style="background:var(--clr-danger); color:white; padding:2px 8px; border-radius:12px; font-size:0.7rem;">Pending</span>'}
+               </div>
+            </div>
+         </div>
+       `;
+    }).join('');
   }
   function renderBulkBillsView() {
     document.getElementById('bulkbillsContainer').innerHTML = '<p class="text-dim">Bulk Bills coming soon...</p>';
   }
   function renderSetupCDRates() {
     const el = document.getElementById('setupCDRatesList');
-    if (el) el.innerHTML = '<p class="text-dim">CD Rates coming soon...</p>';
+    if (!el) return;
+    if (!state.cdRates || state.cdRates.length === 0) {
+      el.innerHTML = '<p class="text-dim">No CD Rates added yet.</p>';
+      return;
+    }
+    el.innerHTML = state.cdRates.map(c => `
+      <div style="border-bottom: 1px solid var(--border-clr); padding: 8px 0; display:flex; justify-content:space-between;">
+        <div>
+           <strong>${escapeHTML(c.round)}</strong> <span class="text-dim text-sm">(${escapeHTML(c.coId)})</span>
+           <div class="text-dim text-sm">Deadline: ${c.deadline ? escapeHTML(c.deadline) : 'None'}</div>
+        </div>
+        <div style="font-weight:bold; color:var(--clr-primary);">
+           ${(c.rate * 100).toFixed(1)}%
+        </div>
+      </div>
+    `).join('');
   }
 
   /* ============ PHASE 2: DASHBOARD (LEDGER) ============ */
