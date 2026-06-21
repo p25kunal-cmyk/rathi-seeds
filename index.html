@@ -83,35 +83,85 @@
       </div>
     </div>
 
-    <!-- ===== MAIN CONTENT ===== -->
-    <main class="main-content">
-
-      <!-- Upload View -->
-      <section class="view-section" id="view-upload">
-        <!-- Rendered by JS -->
-      </section>
-
-      <!-- Parties View -->
-      <section class="view-section" id="view-parties">
-        <!-- Rendered by JS -->
-      </section>
-
-      <!-- Bills View -->
-      <section class="view-section" id="view-bills">
-        <!-- Rendered by JS -->
-      </section>
-
-    </main>
-
-    <!-- ===== BOTTOM NAVIGATION ===== -->
-    <nav class="bottom-nav" id="bottomNav">
-      <!-- Rendered by JS -->
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="nav-tabs" id="mainNav" style="display:none;">
+      <button class="nav-btn active" onclick="App.switchView('dashboard')">📊 Dashboard</button>
+      <button class="nav-btn" onclick="App.switchView('billing')">🧾 Billing Center</button>
+      <button class="nav-btn" onclick="App.switchView('parties')">👥 Parties</button>
+      <button class="nav-btn" onclick="App.switchView('setup')">⚙️ Setup</button>
     </nav>
 
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="app-main">
+
+      <!-- 1) DASHBOARD VIEW -->
+      <section id="dashboardView" class="view active">
+        <h1 class="section-title">Party Performance</h1>
+        <p class="section-subtitle">Live ledger of all parties and outstanding balances.</p>
+        <div id="dashboardContainer" class="dashboard-grid">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- 2) BILLING VIEW -->
+      <section id="billingView" class="view">
+        <h1 class="section-title">Billing Center</h1>
+        <p class="section-subtitle">Generate bills and send to WhatsApp.</p>
+        
+        <div class="card mb-16">
+          <label class="form-label">Select Company</label>
+          <select id="billingCompanySelect" class="form-select" onchange="App.onBillingCompanyChange()">
+            <option value="">-- Choose Company --</option>
+          </select>
+        </div>
+
+        <div id="billingPartiesContainer">
+          <!-- Populated by JS after company selection -->
+        </div>
+      </section>
+
+      <!-- 3) PARTIES VIEW -->
+      <section id="partiesView" class="view">
+        <div class="action-bar mb-16">
+          <div>
+            <h1 class="section-title">Parties Directory</h1>
+            <p class="section-subtitle">Manage dealers and retailers.</p>
+          </div>
+          <button class="btn btn--primary" onclick="App.openAddPartyModal()">+ Add Party</button>
+        </div>
+        <div id="partiesListContainer" class="parties-grid">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- 4) SETUP VIEW -->
+      <section id="setupView" class="view">
+        <div class="action-bar mb-16">
+          <div>
+            <h1 class="section-title">Database Setup</h1>
+            <p class="section-subtitle">Manage Companies and Seed Rates.</p>
+          </div>
+        </div>
+
+        <div class="setup-grid">
+          <div class="card">
+            <h3>Companies</h3>
+            <button class="btn btn--outline btn--sm mt-8" onclick="App.openAddCompanyModal()">+ Add Company</button>
+            <div id="setupCompaniesList" class="mt-16"></div>
+          </div>
+          <div class="card">
+            <h3>Seed Types</h3>
+            <button class="btn btn--outline btn--sm mt-8" onclick="App.openAddSeedModal()">+ Add Seed</button>
+            <div id="setupSeedsList" class="mt-16"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
     <!-- ===== MODAL OVERLAY ===== -->
-    <div class="modal-overlay" id="modalOverlay">
-      <div class="modal-sheet" id="modalSheet">
-        <!-- Dynamic content -->
+    <div id="addModalOverlay" class="modal-overlay" onclick="App.closeModals(event)">
+      <div id="addModalSheet" class="modal-sheet" onclick="event.stopPropagation()">
+        <!-- Populated by JS -->
       </div>
     </div>
 
@@ -125,7 +175,6 @@
   <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 
   <!-- App modules -->
-  <script src="js/excel-parser.js"></script>
   <script src="js/bill-generator.js"></script>
   <script type="module" src="js/app.js"></script>
 

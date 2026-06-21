@@ -1348,3 +1348,43 @@ a { color: var(--clr-primary); text-decoration: none; }
   margin-top: 10px;
   min-height: 20px;
 }
+
+/* ---------- Dashboard / Grid Layouts ---------- */
+.dashboard-grid, .parties-grid, .setup-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 768px) {
+  .setup-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .dashboard-grid, .parties-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+/* ---------- Forms ---------- */
+.form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+}
+.form-select, .form-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border-clr);
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+.form-select:focus, .form-input:focus {
+  outline: none;
+  border-color: var(--clr-primary);
+}

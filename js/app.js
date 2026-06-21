@@ -1,6 +1,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
-import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+import { 
+  getFirestore, collection, addDoc, getDocs, updateDoc, doc, deleteDoc, onSnapshot, query, orderBy 
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDoGpzQqpro0nVW51x9F2VfZ3k6hkLhAZ8",
@@ -15,768 +17,380 @@ const fbApp = initializeApp(firebaseConfig);
 const auth = getAuth(fbApp);
 const db = getFirestore(fbApp);
 
-const App = (() => {
+window.App = (() => {
   'use strict';
 
-  /* ============ STATE ============ */
   let state = {
-    files: [],          // Array of parsed file data
-    activeView: 'upload',
-    selectedParties: new Set(),
-    searchQuery: '',
-    activeFilter: 'all',
-    activeFileIndex: 0,
-    viewingBillPartyId: null,
-    hideZeroBags: false,
+    activeView: 'dashboard',
+    companies: [],
+    seeds: [],
+    parties: [],
+    bookings: [],
   };
 
-  /* ============ INITIALIZATION ============ */
   function init() {
-    setupFirebase();
+    setupAuth();
     bindEvents();
-    renderNav();
-    // Default view shown until auth completes
   }
 
-  /* ============ FIREBASE & STORAGE ============ */
-  let dbUnsubscribe = null;
-
-  function setupFirebase() {
-    // Auth Listener
+  /* ============ AUTHENTICATION ============ */
+  function setupAuth() {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         document.getElementById('loginView').classList.remove('active');
         document.getElementById('logoutBtn').style.display = 'inline-flex';
-        loadState(); // Load real-time data when logged in
+        document.getElementById('mainNav').style.display = 'flex';
+        
+        // Start listening to databases
+        listenToCollections();
+        switchView('dashboard');
       } else {
         document.getElementById('loginView').classList.add('active');
         document.getElementById('logoutBtn').style.display = 'none';
-        if (dbUnsubscribe) {
-          dbUnsubscribe();
-          dbUnsubscribe = null;
-        }
-        state.files = []; // Clear local state
-        renderUploadView();
+        document.getElementById('mainNav').style.display = 'none';
+        
+        // Hide all views
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
       }
     });
 
-    // Login Form Submission
-    document.getElementById('loginForm')?.addEventListener('submit', (e) => {
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const em = document.getElementById('loginEmail').value;
-      const pw = document.getElementById('loginPassword').value;
+      const email = document.getElementById('email').value;
+      const pass = document.getElementById('password').value;
+      const btn = document.getElementById('loginBtn');
       const errEl = document.getElementById('loginError');
-      errEl.textContent = 'Logging in...';
       
-      signInWithEmailAndPassword(auth, em, pw)
-        .then(() => { errEl.textContent = ''; })
-        .catch((error) => {
-          console.error("Login failed:", error);
-          errEl.textContent = "Invalid email or password.";
-        });
+      btn.textContent = "Logging in...";
+      errEl.textContent = "";
+
+      try {
+        await signInWithEmailAndPassword(auth, email, pass);
+      } catch (err) {
+        errEl.textContent = "Invalid email or password.";
+      } finally {
+        btn.textContent = "Log In";
+      }
     });
 
-    // Logout Button
-    document.getElementById('logoutBtn')?.addEventListener('click', () => {
+    document.getElementById('logoutBtn').addEventListener('click', () => {
       signOut(auth);
     });
   }
 
-  function loadState() {
-    if (dbUnsubscribe) dbUnsubscribe();
-    
-    // Listen to company data in real-time
-    const docRef = doc(db, 'companyData', 'main');
-    dbUnsubscribe = onSnapshot(docRef, (docSnap) => {
-      if (docSnap.exists()) {
-        const parsed = docSnap.data();
-        state.files = parsed.files || [];
-        state.activeFileIndex = parsed.activeFileIndex || 0;
-      } else {
-        state.files = [];
-        state.activeFileIndex = 0;
-      }
-      
-      if (state.activeView === 'upload' && state.files.length > 0) {
-        switchView('parties');
-      } else {
-        // Refresh whatever view is open
-        if (state.activeView === 'upload') renderUploadView();
-        if (state.activeView === 'parties') renderPartiesView();
-        if (state.activeView === 'bills') renderBillsView();
-      }
-    }, (err) => {
-      console.error("Firestore Listen Error:", err);
-      if (err.code === 'permission-denied') {
-        alert("You do not have permission to read the company data.");
-      }
+  /* ============ FIRESTORE LISTENERS ============ */
+  function listenToCollections() {
+    onSnapshot(collection(db, "companies"), (snap) => {
+      state.companies = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      renderSetupCompanies();
     });
-  }
 
-  function saveState() {
-    try {
-      if (!auth.currentUser) return;
-      
-      const docRef = doc(db, 'companyData', 'main');
-      setDoc(docRef, {
-        files: state.files,
-        activeFileIndex: state.activeFileIndex,
-        lastUpdated: new Date().toISOString(),
-        updatedBy: auth.currentUser.email
-      }, { merge: true }).catch(e => console.error("Firestore Save Error:", e));
-    } catch (e) {
-      console.warn('Failed to save data:', e);
-    }
+    onSnapshot(collection(db, "seeds"), (snap) => {
+      state.seeds = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      renderSetupSeeds();
+    });
+
+    onSnapshot(collection(db, "parties"), (snap) => {
+      state.parties = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      renderPartiesList();
+    });
+
+    onSnapshot(collection(db, "bookings"), (snap) => {
+      state.bookings = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      renderDashboard();
+    });
   }
 
   /* ============ NAVIGATION ============ */
-  function switchView(view) {
-    state.activeView = view;
-    document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-    document.getElementById(`view-${view}`)?.classList.add('active');
-    document.querySelectorAll('.bottom-nav__item').forEach(el => {
-      el.classList.toggle('active', el.dataset.view === view);
-    });
+  function switchView(viewId) {
+    state.activeView = viewId;
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
 
-    // Render view content
-    if (view === 'upload')  renderUploadView();
-    if (view === 'parties') renderPartiesView();
-    if (view === 'bills')   renderBillsView();
-  }
+    document.getElementById(viewId + 'View')?.classList.add('active');
+    
+    const activeBtn = Array.from(document.querySelectorAll('.nav-btn')).find(b => b.textContent.toLowerCase().includes(viewId.substring(0,4)));
+    if (activeBtn) activeBtn.classList.add('active');
 
-  function renderNav() {
-    const nav = document.getElementById('bottomNav');
-    nav.innerHTML = `
-      <button class="bottom-nav__item" data-view="upload" id="nav-upload">
-        <span class="bottom-nav__icon">📤</span>
-        <span class="bottom-nav__label">Upload</span>
-      </button>
-      <button class="bottom-nav__item" data-view="parties" id="nav-parties">
-        <span class="bottom-nav__icon">👥</span>
-        <span class="bottom-nav__label">Parties</span>
-      </button>
-      <button class="bottom-nav__item" data-view="bills" id="nav-bills">
-        <span class="bottom-nav__icon">🧾</span>
-        <span class="bottom-nav__label">Bills</span>
-      </button>
-    `;
-
-    nav.querySelectorAll('.bottom-nav__item').forEach(btn => {
-      btn.addEventListener('click', () => switchView(btn.dataset.view));
-    });
-  }
-
-  /* ============ UPLOAD VIEW ============ */
-  function renderUploadView() {
-    const container = document.getElementById('view-upload');
-    const hasFiles = state.files.length > 0;
-
-    let filesHTML = '';
-    if (hasFiles) {
-      filesHTML = '<div class="data-cards">';
-      state.files.forEach((file, idx) => {
-        const date = new Date(file.uploadedAt).toLocaleDateString('en-IN', {
-          day: '2-digit', month: 'short', year: 'numeric'
-        });
-        filesHTML += `
-          <div class="data-card">
-            <div class="data-card__icon">📊</div>
-            <div class="data-card__info">
-              <div class="data-card__name">${file.product}</div>
-              <div class="data-card__meta">${file.parties.length} parties · ${file.sheetName} · ${date}</div>
-            </div>
-            <div class="data-card__actions">
-              <button class="data-card__delete" onclick="App.deleteFile(${idx}, event)" title="Remove">✕</button>
-            </div>
-          </div>`;
-      });
-      filesHTML += '</div>';
+    if (viewId === 'dashboard') renderDashboard();
+    if (viewId === 'billing') renderBillingView();
+    if (viewId === 'parties') renderPartiesList();
+    if (viewId === 'setup') {
+      renderSetupCompanies();
+      renderSetupSeeds();
     }
-
-    container.innerHTML = `
-      <h1 class="section-title">📤 Upload Data</h1>
-      <p class="section-subtitle">Upload your Excel booking files to get started</p>
-
-      <div class="upload-zone" id="uploadZone">
-        <div class="upload-zone__icon">📁</div>
-        <div class="upload-zone__text">Tap to upload Excel file</div>
-        <div class="upload-zone__hint">or drag & drop .xlsx file here</div>
-        <input type="file" id="fileInput" accept=".xlsx,.xls">
-      </div>
-
-      <div class="upload-status" id="uploadStatus"></div>
-
-      ${filesHTML ? '<h2 class="section-title mt-24" style="font-size:1.1rem">📂 Uploaded Files</h2>' + filesHTML : ''}
-    `;
-
-    // Bind upload events
-    const zone = document.getElementById('uploadZone');
-    const input = document.getElementById('fileInput');
-
-    zone.addEventListener('click', () => input.click());
-
-    zone.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      zone.classList.add('dragover');
-    });
-
-    zone.addEventListener('dragleave', () => {
-      zone.classList.remove('dragover');
-    });
-
-    zone.addEventListener('drop', (e) => {
-      e.preventDefault();
-      zone.classList.remove('dragover');
-      const file = e.dataTransfer.files[0];
-      if (file) handleFile(file);
-    });
-
-    input.addEventListener('change', () => {
-      if (input.files[0]) handleFile(input.files[0]);
-    });
   }
 
-  function handleFile(file) {
-    if (!file.name.match(/\.xlsx?$/i)) {
-      showUploadStatus('error', '❌ Invalid File', 'Please upload an .xlsx file');
+  /* ============ PHASE 1: SETUP (COMPANIES & SEEDS) ============ */
+  function renderSetupCompanies() {
+    const container = document.getElementById('setupCompaniesList');
+    if (!container) return;
+    
+    if (state.companies.length === 0) {
+      container.innerHTML = `<p class="text-dim">No companies added yet.</p>`;
       return;
     }
 
-    showUploadStatus('loading', '⏳ Processing...', file.name);
+    container.innerHTML = state.companies.map(c => `
+      <div style="border-bottom: 1px solid var(--border-clr); padding: 8px 0; display:flex; justify-content:space-between;">
+        <div><strong>${escapeHTML(c.name)}</strong></div>
+      </div>
+    `).join('');
+  }
 
-    const reader = new FileReader();
-    reader.onload = (e) => {
+  function renderSetupSeeds() {
+    const container = document.getElementById('setupSeedsList');
+    if (!container) return;
+    
+    if (state.seeds.length === 0) {
+      container.innerHTML = `<p class="text-dim">No seeds added yet.</p>`;
+      return;
+    }
+
+    container.innerHTML = state.seeds.map(s => {
+      const co = state.companies.find(c => c.id === s.companyId);
+      const coName = co ? co.name : 'Unknown';
+      return `
+      <div style="border-bottom: 1px solid var(--border-clr); padding: 8px 0;">
+        <div><strong>${escapeHTML(s.name)}</strong> (${escapeHTML(s.weight)} Kg)</div>
+        <div class="text-dim text-sm">${escapeHTML(coName)} • Rate: ₹${s.currentRate}</div>
+      </div>
+    `}).join('');
+  }
+
+  function openAddCompanyModal() {
+    const html = `
+      <div class="modal-sheet__handle"></div>
+      <div class="modal-sheet__title">Add New Company</div>
+      <form id="addCompanyForm" style="display:flex; flex-direction:column; gap:16px;">
+        <div>
+          <label class="form-label">Company Name</label>
+          <input type="text" id="coName" class="form-input" required placeholder="e.g. Savira Seeds">
+        </div>
+        <button type="submit" class="btn btn--primary" style="width:100%">Save Company</button>
+      </form>
+    `;
+    openModal(html);
+
+    document.getElementById('addCompanyForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('coName').value;
       try {
-        const parsed = ExcelParser.parseFile(e.target.result, file.name);
-
-        if (parsed.parties.length === 0) {
-          showUploadStatus('error', '⚠️ No Data Found', 'Could not find party data in this file');
-          return;
-        }
-
-        // Check if file with same product already exists
-        const existingIdx = state.files.findIndex(f => f.product === parsed.product);
-        if (existingIdx >= 0) {
-          state.files[existingIdx] = parsed;
-        } else {
-          state.files.push(parsed);
-        }
-
-        state.activeFileIndex = existingIdx >= 0 ? existingIdx : state.files.length - 1;
-        saveState();
-
-        showUploadStatus('success', '✅ Upload Successful!',
-          `${parsed.parties.length} parties loaded from "${parsed.sheetName}"`);
-
-        // Re-render to show updated file list
-        setTimeout(() => renderUploadView(), 1500);
+        await addDoc(collection(db, "companies"), { name });
+        closeModals();
+        showToast("Company added!");
       } catch (err) {
         console.error(err);
-        showUploadStatus('error', '❌ Parse Error', err.message);
+        showToast("Error adding company");
       }
-    };
-
-    reader.onerror = () => {
-      showUploadStatus('error', '❌ Read Error', 'Could not read the file');
-    };
-
-    reader.readAsArrayBuffer(file);
-  }
-
-  function showUploadStatus(type, title, detail) {
-    const el = document.getElementById('uploadStatus');
-    if (!el) return;
-    el.className = `upload-status visible ${type === 'loading' ? '' : type}`;
-    el.innerHTML = `
-      <div class="upload-status__title">${title}</div>
-      <div class="upload-status__detail">${detail}</div>
-    `;
-  }
-
-  function deleteFile(index, event) {
-    if (event) event.stopPropagation();
-    if (!confirm('Remove this file data?')) return;
-    state.files.splice(index, 1);
-    state.activeFileIndex = Math.max(0, Math.min(state.activeFileIndex, state.files.length - 1));
-    saveState();
-    renderUploadView();
-  }
-
-  /* ============ PARTIES VIEW ============ */
-  function renderPartiesView() {
-    const container = document.getElementById('view-parties');
-
-    if (state.files.length === 0) {
-      container.innerHTML = `
-        <div class="empty-state">
-          <div class="empty-state__icon">📂</div>
-          <div class="empty-state__title">No Data Yet</div>
-          <div class="empty-state__text">Upload an Excel file first to see your parties</div>
-          <button class="btn btn--primary mt-16" onclick="App.switchView('upload')">📤 Upload Now</button>
-        </div>`;
-      return;
-    }
-
-    const fileData = state.files[state.activeFileIndex];
-    const parties = filterParties(fileData.parties);
-    const centers = ExcelParser.getCenters(fileData);
-    const selectedCount = state.selectedParties.size;
-
-    // File selector (if multiple files)
-    let fileSelectorHTML = '';
-    if (state.files.length > 1) {
-      fileSelectorHTML = '<div class="chip-group mb-16">';
-      state.files.forEach((f, idx) => {
-        fileSelectorHTML += `
-          <button class="chip ${idx === state.activeFileIndex ? 'active' : ''}"
-                  onclick="App.switchFile(${idx})">
-            ${f.product}
-          </button>`;
-      });
-      fileSelectorHTML += '</div>';
-    }
-
-    // Center filter chips
-    let filterHTML = '<div class="chip-group">';
-    filterHTML += `<button class="chip ${state.activeFilter === 'all' ? 'active' : ''}"
-                           onclick="App.filterByCenter('all')">All</button>`;
-    centers.forEach(c => {
-      filterHTML += `<button class="chip ${state.activeFilter === c ? 'active' : ''}"
-                             onclick="App.filterByCenter('${c.replace(/'/g, "\\'")}')">${c}</button>`;
     });
-    filterHTML += '</div>';
-
-    // Stats
-    const totalBags = Math.round(fileData.parties.reduce((s, p) => s + (p.totalBags || 0), 0) * 100) / 100;
-    const totalAmt = fileData.parties.reduce((s, p) => s + (p.totalAmt || 0), 0);
-
-    // Party list
-    let listHTML = '<div class="party-list">';
-    parties.forEach(party => {
-      const isSelected = state.selectedParties.has(party.id);
-      listHTML += `
-        <div class="party-item ${isSelected ? 'selected' : ''}" data-id="${party.id}">
-          <div class="party-item__checkbox" onclick="event.stopPropagation(); App.toggleParty(${party.id})">
-            ${isSelected ? '✓' : ''}
-          </div>
-          <div class="party-item__info" onclick="App.viewPartyBill(${party.id})">
-            <div class="party-item__name">${(party.name || 'Unknown').trim()}</div>
-            <div class="party-item__detail">
-              ${party.center ? `<span>📍 ${party.center}</span>` : ''}
-              ${(party.dynamicTags || []).map((t, i) => 
-                `<span class="party-item__tag ${i % 2 !== 0 ? 'party-item__tag--accent' : ''}">${t.shortLabel}: ${Math.round(t.value * 100) / 100}</span>`
-              ).join('')}
-            </div>
-          </div>
-          <span class="party-item__arrow" onclick="App.viewPartyBill(${party.id})">›</span>
-        </div>`;
-    });
-    listHTML += '</div>';
-
-    container.innerHTML = `
-      <h1 class="section-title">👥 Parties</h1>
-      <p class="section-subtitle">${fileData.product} · ${fileData.parties.length} parties</p>
-
-      ${fileSelectorHTML}
-
-      <div class="stats-row">
-        <div class="stat-card">
-          <div class="stat-card__value">${fileData.parties.length}</div>
-          <div class="stat-card__label">Parties</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-card__value">${totalBags}</div>
-          <div class="stat-card__label">Total Bags</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-card__value">${abbreviateNumber(totalAmt)}</div>
-          <div class="stat-card__label">Total Amt</div>
-        </div>
-      </div>
-
-      <div class="search-bar">
-        <span class="search-bar__icon">🔍</span>
-        <input type="text" class="search-bar__input" id="searchInput"
-               placeholder="Search parties..." value="${state.searchQuery}"
-               oninput="App.onSearch(this.value)">
-      </div>
-
-      ${filterHTML}
-
-      <div style="margin-bottom: 12px; margin-top: 12px;">
-        <label style="display:inline-flex; align-items:center; gap:8px; font-size:0.85rem; color:var(--clr-text-mid); cursor:pointer;">
-          <input type="checkbox" ${state.hideZeroBags ? 'checked' : ''} onchange="App.toggleHideZeroBags()" style="accent-color: var(--clr-primary); width:16px; height:16px;">
-          Hide parties with 0 bags
-        </label>
-      </div>
-
-      <div class="action-bar">
-        <span class="action-bar__count">
-          <strong>${selectedCount}</strong> selected of ${parties.length}
-        </span>
-        <button class="btn btn--ghost btn--sm" onclick="App.selectAll()">Select All</button>
-        <button class="btn btn--ghost btn--sm" onclick="App.deselectAll()">Clear</button>
-      </div>
-
-      ${listHTML}
-
-      ${selectedCount > 0 ? `
-        <button class="btn btn--fab" onclick="App.generateSelectedBills()" title="Generate Bills for Selected">
-          🧾
-        </button>
-      ` : ''}
-    `;
   }
 
-  function filterParties(parties) {
-    let filtered = parties;
-
-    if (state.hideZeroBags) {
-      filtered = filtered.filter(p => p.totalBags > 0);
-    }
-
-    // Filter by center
-    if (state.activeFilter !== 'all') {
-      filtered = filtered.filter(p => p.center === state.activeFilter);
-    }
-
-    // Filter by search
-    if (state.searchQuery) {
-      const q = state.searchQuery.toLowerCase();
-      filtered = filtered.filter(p => {
-        const name = (p.name || '').toLowerCase();
-        const center = (p.center || '').toLowerCase();
-        return name.includes(q) || center.includes(q);
-      });
-    }
-
-    return filtered;
-  }
-
-  function onSearch(query) {
-    state.searchQuery = query;
-    renderPartiesView();
-    // Re-focus search input
-    setTimeout(() => {
-      const input = document.getElementById('searchInput');
-      if (input) { input.focus(); input.setSelectionRange(query.length, query.length); }
-    }, 10);
-  }
-
-  function filterByCenter(center) {
-    state.activeFilter = center;
-    renderPartiesView();
-  }
-
-  function toggleHideZeroBags() {
-    state.hideZeroBags = !state.hideZeroBags;
-    renderPartiesView();
-  }
-
-  function toggleParty(id) {
-    if (state.selectedParties.has(id)) {
-      state.selectedParties.delete(id);
-    } else {
-      state.selectedParties.add(id);
-    }
-    renderPartiesView();
-  }
-
-  function selectAll() {
-    const fileData = state.files[state.activeFileIndex];
-    const parties = filterParties(fileData.parties);
-    parties.forEach(p => state.selectedParties.add(p.id));
-    renderPartiesView();
-  }
-
-  function deselectAll() {
-    state.selectedParties.clear();
-    renderPartiesView();
-  }
-
-  function switchFile(index) {
-    state.activeFileIndex = index;
-    state.selectedParties.clear();
-    state.searchQuery = '';
-    state.activeFilter = 'all';
-    saveState();
-    renderPartiesView();
-  }
-
-  /* ============ BILLS VIEW ============ */
-  function renderBillsView() {
-    const container = document.getElementById('view-bills');
-
-    if (state.files.length === 0) {
-      container.innerHTML = `
-        <div class="empty-state">
-          <div class="empty-state__icon">🧾</div>
-          <div class="empty-state__title">No Bills Yet</div>
-          <div class="empty-state__text">Upload data and select parties to generate bills</div>
-          <button class="btn btn--primary mt-16" onclick="App.switchView('upload')">📤 Upload Now</button>
-        </div>`;
+  function openAddSeedModal() {
+    if (state.companies.length === 0) {
+      showToast("Please add a company first.");
       return;
     }
 
-    // If viewing a single party bill
-    if (state.viewingBillPartyId !== null) {
-      renderSingleBill(container);
-      return;
-    }
+    const coOptions = state.companies.map(c => `<option value="${c.id}">${escapeHTML(c.name)}</option>`).join('');
 
-    // If selected parties exist, show their bills
-    if (state.selectedParties.size > 0) {
-      renderSelectedBills(container);
-      return;
-    }
-
-    // Default: prompt to select
-    container.innerHTML = `
-      <h1 class="section-title">🧾 Bills</h1>
-      <p class="section-subtitle">Select parties to generate bills</p>
-      <div class="empty-state">
-        <div class="empty-state__icon">📋</div>
-        <div class="empty-state__title">Select Parties First</div>
-        <div class="empty-state__text">Go to Parties tab and select the parties you want to generate bills for</div>
-        <button class="btn btn--primary mt-16" onclick="App.switchView('parties')">👥 Go to Parties</button>
-      </div>`;
-  }
-
-  function renderSingleBill(container) {
-    const fileData = state.files[state.activeFileIndex];
-    const party = fileData.parties.find(p => p.id === state.viewingBillPartyId);
-
-    if (!party) {
-      state.viewingBillPartyId = null;
-      renderBillsView();
-      return;
-    }
-
-    const billHTML = BillGenerator.generateBillHTML(party);
-
-    container.innerHTML = `
-      <button class="back-btn" onclick="App.closeBillView()">← Back to Parties</button>
-      <h1 class="section-title">🧾 Bill</h1>
-      <p class="section-subtitle">${fileData.product} · ${party.name.trim()}</p>
-      ${billHTML}
-    `;
-  }
-
-  function renderSelectedBills(container) {
-    const fileData = state.files[state.activeFileIndex];
-    const selectedParties = fileData.parties.filter(p => state.selectedParties.has(p.id));
-
-    let billsHTML = '';
-    selectedParties.forEach(party => {
-      billsHTML += BillGenerator.generateBillHTML(party);
-    });
-
-    container.innerHTML = `
-      <h1 class="section-title">🧾 Generated Bills</h1>
-      <p class="section-subtitle">${selectedParties.length} bills · ${fileData.product}</p>
-
-      <div class="action-bar mb-16">
-        <button class="btn btn--primary btn--sm" onclick="App.copyAllBills()">
-          📋 Copy All Bills
-        </button>
-        <button class="btn btn--outline btn--sm" onclick="App.switchView('parties')">
-          ← Back
-        </button>
-      </div>
-
-      ${billsHTML}
-    `;
-  }
-
-  function viewPartyBill(id) {
-    state.viewingBillPartyId = id;
-    switchView('bills');
-  }
-
-  function closeBillView() {
-    state.viewingBillPartyId = null;
-    switchView('parties');
-  }
-
-  function generateSelectedBills() {
-    if (state.selectedParties.size === 0) {
-      showToast('Select parties first');
-      return;
-    }
-    switchView('bills');
-  }
-
-  /* ============ COPY FUNCTIONS ============ */
-  function copyBillText(partyId) {
-    const fileData = state.files[state.activeFileIndex];
-    const party = fileData.parties.find(p => p.id === partyId);
-    if (!party) return;
-
-    const text = BillGenerator.generateBillText(party);
-    copyToClipboard(text);
-  }
-
-  function showBillText(partyId) {
-    const fileData = state.files[state.activeFileIndex];
-    const party = fileData.parties.find(p => p.id === partyId);
-    if (!party) return;
-
-    const text = BillGenerator.generateBillText(party);
-
-    // Show in modal
-    const overlay = document.getElementById('modalOverlay');
-    const sheet = document.getElementById('modalSheet');
-
-    sheet.innerHTML = `
+    const html = `
       <div class="modal-sheet__handle"></div>
-      <div class="modal-sheet__title">📝 Bill Text — ${party.name.trim()}</div>
-      <div class="bill-text">${escapeHTML(text)}</div>
-      <div style="display:flex; gap:8px">
-        <button class="btn btn--primary" onclick="App.copyBillText(${partyId}); App.closeModal()">
-          📋 Copy
-        </button>
-        <button class="btn btn--outline" onclick="App.closeModal()">
-          Close
-        </button>
-      </div>
+      <div class="modal-sheet__title">Add Seed Type</div>
+      <form id="addSeedForm" style="display:flex; flex-direction:column; gap:16px;">
+        <div>
+          <label class="form-label">Company</label>
+          <select id="seedCo" class="form-select" required>${coOptions}</select>
+        </div>
+        <div>
+          <label class="form-label">Seed Name</label>
+          <input type="text" id="seedName" class="form-input" required placeholder="e.g. Pushpa">
+        </div>
+        <div>
+          <label class="form-label">Bag Weight (Kg)</label>
+          <input type="number" id="seedWt" class="form-input" required placeholder="e.g. 25">
+        </div>
+        <div>
+          <label class="form-label">Current Rate (₹)</label>
+          <input type="number" id="seedRate" class="form-input" required placeholder="e.g. 2999">
+        </div>
+        <button type="submit" class="btn btn--primary" style="width:100%">Save Seed</button>
+      </form>
     `;
+    openModal(html);
 
+    document.getElementById('addSeedForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      try {
+        await addDoc(collection(db, "seeds"), {
+          companyId: document.getElementById('seedCo').value,
+          name: document.getElementById('seedName').value,
+          weight: document.getElementById('seedWt').value,
+          currentRate: document.getElementById('seedRate').value
+        });
+        closeModals();
+        showToast("Seed added!");
+      } catch (err) {
+        console.error(err);
+        showToast("Error adding seed");
+      }
+    });
+  }
+
+  /* ============ PHASE 1: PARTIES ============ */
+  function renderPartiesList() {
+    const container = document.getElementById('partiesListContainer');
+    if (!container) return;
+
+    if (state.parties.length === 0) {
+      container.innerHTML = `<div class="card"><p class="text-dim">No parties found. Add one above.</p></div>`;
+      return;
+    }
+
+    container.innerHTML = state.parties.map(p => `
+      <div class="card" style="display:flex; flex-direction:column; gap:4px;">
+        <h3 style="margin:0">${escapeHTML(p.name)}</h3>
+        <div class="text-dim text-sm">📍 ${escapeHTML(p.center || 'No Center')} | 📞 ${escapeHTML(p.phone || 'N/A')}</div>
+      </div>
+    `).join('');
+  }
+
+  function openAddPartyModal() {
+    const html = `
+      <div class="modal-sheet__handle"></div>
+      <div class="modal-sheet__title">Add New Party</div>
+      <form id="addPartyForm" style="display:flex; flex-direction:column; gap:16px;">
+        <div>
+          <label class="form-label">Party Name</label>
+          <input type="text" id="partyName" class="form-input" required placeholder="e.g. Sai k k">
+        </div>
+        <div>
+          <label class="form-label">Center / Area</label>
+          <input type="text" id="partyCenter" class="form-input" placeholder="e.g. Bhankheda">
+        </div>
+        <div>
+          <label class="form-label">WhatsApp Number</label>
+          <input type="text" id="partyPhone" class="form-input" placeholder="e.g. 919307032698">
+        </div>
+        <button type="submit" class="btn btn--primary" style="width:100%">Save Party</button>
+      </form>
+    `;
+    openModal(html);
+
+    document.getElementById('addPartyForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      try {
+        await addDoc(collection(db, "parties"), {
+          name: document.getElementById('partyName').value,
+          center: document.getElementById('partyCenter').value,
+          phone: document.getElementById('partyPhone').value,
+          isActive: true
+        });
+        closeModals();
+        showToast("Party added!");
+      } catch (err) {
+        console.error(err);
+        showToast("Error adding party");
+      }
+    });
+  }
+
+  /* ============ PHASE 2 PLACEHOLDERS ============ */
+  function renderDashboard() {
+    const container = document.getElementById('dashboardContainer');
+    if (!container) return;
+    container.innerHTML = `<div class="card"><em>Dashboard analytics coming in Phase 2.</em></div>`;
+  }
+
+  function renderBillingView() {
+    // Populates company select
+    const select = document.getElementById('billingCompanySelect');
+    if (!select) return;
+    
+    select.innerHTML = '<option value="">-- Choose Company --</option>' + 
+      state.companies.map(c => `<option value="${c.id}">${escapeHTML(c.name)}</option>`).join('');
+  }
+
+  function onBillingCompanyChange() {
+    const coId = document.getElementById('billingCompanySelect').value;
+    const container = document.getElementById('billingPartiesContainer');
+    if (!coId) {
+      container.innerHTML = '';
+      return;
+    }
+    container.innerHTML = `<div class="card mt-16"><em>Billing generator for this company coming in Phase 2.</em></div>`;
+  }
+
+
+  /* ============ UI UTILS ============ */
+  function openModal(htmlContent) {
+    const overlay = document.getElementById('addModalOverlay');
+    const sheet = document.getElementById('addModalSheet');
+    sheet.innerHTML = htmlContent;
     overlay.classList.add('open');
   }
 
-  function downloadBillPDF(partyId) {
-    const fileData = state.files[state.activeFileIndex];
-    const party = fileData.parties.find(p => p.id === partyId);
-    if (!party) return;
-
-    const element = document.querySelector(`.bill-container[data-party-id="${partyId}"]`);
-    if (!element) return;
-
-    // Set up print classes
-    document.body.classList.add('printing-bill');
-    element.classList.add('print-active');
-
-    // Prompt native print dialog
-    window.print();
-
-    // Clean up after print dialog closes
-    setTimeout(() => {
-      document.body.classList.remove('printing-bill');
-      element.classList.remove('print-active');
-    }, 500);
+  function closeModals(e) {
+    // If e is passed, only close if clicking overlay directly
+    if (e && e.target.id !== 'addModalOverlay') return;
+    document.getElementById('addModalOverlay').classList.remove('open');
   }
 
-  function shareBillWhatsApp(partyId) {
-    const fileData = state.files[state.activeFileIndex];
-    const party = fileData.parties.find(p => p.id === partyId);
-    if (!party) return;
-
-    // Generate the clean text format of the bill
-    const text = BillGenerator.generateBillText(party);
-    
-    // The specific number requested by the user
-    const phone = "919307032698"; 
-    
-    // Open WhatsApp Web directly with the pre-filled text
-    const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
-    window.open(url, '_blank');
-  }
-
-  function copyAllBills() {
-    const fileData = state.files[state.activeFileIndex];
-    const selectedParties = fileData.parties.filter(p => state.selectedParties.has(p.id));
-
-    if (selectedParties.length === 0) {
-      showToast('No parties selected');
-      return;
+  function showToast(msg) {
+    let t = document.getElementById('toastMsg');
+    if (!t) {
+      t = document.createElement('div');
+      t.id = 'toastMsg';
+      t.style.cssText = 'position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#333; color:#fff; padding:10px 20px; border-radius:20px; font-size:14px; z-index:9999; transition:opacity 0.3s;';
+      document.body.appendChild(t);
     }
-
-    const allText = selectedParties.map(party =>
-      BillGenerator.generateBillText(party)
-    ).join('\n\n' + '═'.repeat(40) + '\n\n');
-
-    copyToClipboard(allText);
-  }
-
-  function copyToClipboard(text) {
-    navigator.clipboard.writeText(text).then(() => {
-      showToast('✅ Copied to clipboard!');
-    }).catch(() => {
-      // Fallback for older browsers
-      const ta = document.createElement('textarea');
-      ta.value = text;
-      ta.style.position = 'fixed';
-      ta.style.opacity = '0';
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
-      showToast('✅ Copied to clipboard!');
-    });
-  }
-
-  /* ============ MODAL ============ */
-  function closeModal() {
-    document.getElementById('modalOverlay').classList.remove('open');
-  }
-
-  /* ============ TOAST ============ */
-  function showToast(message) {
-    const toast = document.getElementById('toast');
-    toast.textContent = message;
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 2500);
-  }
-
-  /* ============ HELPERS ============ */
-  function abbreviateNumber(num) {
-    if (num >= 10000000) return '₹' + (num / 10000000).toFixed(1) + 'Cr';
-    if (num >= 100000)   return '₹' + (num / 100000).toFixed(1) + 'L';
-    if (num >= 1000)     return '₹' + (num / 1000).toFixed(0) + 'K';
-    return '₹' + num;
+    t.textContent = msg;
+    t.style.opacity = '1';
+    setTimeout(() => { t.style.opacity = '0'; }, 3000);
   }
 
   function escapeHTML(str) {
-    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    if (!str) return '';
+    return str.toString().replace(/[&<>'"]/g, 
+      tag => ({
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          "'": '&#39;',
+          '"': '&quot;'
+        }[tag] || tag)
+    );
   }
 
   function bindEvents() {
-    // Close modal on overlay click
-    document.getElementById('modalOverlay')?.addEventListener('click', (e) => {
-      if (e.target === e.currentTarget) closeModal();
-    });
+    const tBtn = document.getElementById('themeToggle');
+    if(tBtn) {
+      tBtn.addEventListener('click', () => {
+        const root = document.documentElement;
+        const meta = document.getElementById('themeColorMeta');
+        if (root.getAttribute('data-theme') === 'dark') {
+          root.removeAttribute('data-theme');
+          localStorage.setItem('rathiSeeds_theme', 'light');
+          if(meta) meta.content = '#e8f0eb';
+        } else {
+          root.setAttribute('data-theme', 'dark');
+          localStorage.setItem('rathiSeeds_theme', 'dark');
+          if(meta) meta.content = '#0f1a15';
+        }
+      });
+    }
   }
 
-  /* ============ PUBLIC API ============ */
+  document.addEventListener('DOMContentLoaded', init);
+
+  // Return public API
   return {
-    init,
     switchView,
-    switchFile,
-    onSearch,
-    filterByCenter,
-    toggleHideZeroBags,
-    toggleParty,
-    selectAll,
-    deselectAll,
-    viewPartyBill,
-    closeBillView,
-    generateSelectedBills,
-    copyBillText,
-    showBillText,
-    downloadBillPDF,
-    shareBillWhatsApp,
-    copyAllBills,
-    closeModal,
-    deleteFile,
+    openAddCompanyModal,
+    openAddSeedModal,
+    openAddPartyModal,
+    closeModals,
+    onBillingCompanyChange
   };
+
 })();
-
-// Expose to window for inline HTML handlers
-window.App = App;
-
-// Initialize on DOM ready
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', App.init);
-} else {
-  App.init();
-}
