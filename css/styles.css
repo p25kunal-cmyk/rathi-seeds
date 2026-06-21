@@ -138,6 +138,9 @@ h1, h2, h3 { color: var(--text-primary); }
   gap: 12px;
   overflow-x: auto;
   scrollbar-width: none;
+  position: sticky;
+  top: 73px;
+  z-index: 40;
 }
 .nav-tabs::-webkit-scrollbar { display: none; }
 .nav-btn {
