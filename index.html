@@ -36,6 +36,9 @@
   <!-- Icons -->
   <link rel="icon" href="assets/icon-192.png" type="image/png">
   <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 <body>
   <div id="app" class="app-layout">
@@ -101,8 +104,29 @@
 
       <!-- 1) DASHBOARD VIEW -->
       <section id="dashboardView" class="view active">
-        <h1 class="section-title">Party Performance</h1>
-        <p class="section-subtitle">Live ledger of all parties and outstanding balances.</p>
+        <div class="action-bar mb-16">
+          <div>
+            <h1 class="section-title">Overview</h1>
+            <p class="section-subtitle">Live ledger and business metrics</p>
+          </div>
+          <div style="display:flex; gap:10px;">
+            <button class="btn btn--outline" onclick="App.openAddPaymentModal()">+ Payment</button>
+            <button class="btn btn--primary" onclick="App.openAddBookingModal()">+ Booking</button>
+          </div>
+        </div>
+
+        <!-- Charts Container -->
+        <div class="dashboard-grid mb-16" id="dashboardCharts" style="display:none;">
+          <div class="card">
+            <h3 style="margin-top:0;">Company Sales Distribution</h3>
+            <canvas id="salesDonutChart" height="200"></canvas>
+          </div>
+          <div class="card">
+            <h3 style="margin-top:0;">Top Parties Outstanding</h3>
+            <canvas id="outstandingBarChart" height="200"></canvas>
+          </div>
+        </div>
+
         <div id="dashboardContainer" class="dashboard-grid">
           <!-- Populated by JS -->
         </div>

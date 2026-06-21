@@ -8198,17 +8198,22 @@ window.App = (() => {
   }
 
   /* ============ PHASE 2: DASHBOARD (LEDGER) ============ */
+  let dashboardChartsInstance = {};
+
   function renderDashboard() {
     const container = document.getElementById('dashboardContainer');
     if (!container) return;
 
     if (state.parties.length === 0 || state.bookings.length === 0) {
       container.innerHTML = `<div class="card"><p class="text-dim">No ledger data available. Import DB in Setup.</p></div>`;
+      document.getElementById('dashboardCharts').style.display = 'none';
       return;
     }
 
     // Group bookings by party
     let ledgerHTML = '';
+    const coSales = {};
+    const partyOutstandings = [];
     
     for (const p of state.parties) {
       const pBookings = state.bookings.filter(b => b.partyName === p.name);
@@ -8220,6 +8225,10 @@ window.App = (() => {
 
       pBookings.forEach(b => {
         totalGross += getGrossBill(b);
+        const net = getNetPayable(b);
+        const coName = state.companies.find(c => c.coId === b.companyId || c.id === b.companyId)?.name || b.companyId;
+        if(!coSales[coName]) coSales[coName] = 0;
+        coSales[coName] += net;
       });
 
       const uniqueCoIds = [...new Set(pBookings.map(b => b.companyId))];
@@ -8227,6 +8236,8 @@ window.App = (() => {
          totalReceived += getTotalReceived(p.name, coId);
          totalOutstanding += getOutstandingBalance(p.name, coId);
       });
+
+      partyOutstandings.push({name: p.name, out: totalOutstanding});
 
       const isClear = totalOutstanding <= 0;
 
@@ -8250,8 +8261,72 @@ window.App = (() => {
         </div>
       `;
     }
-
+    
     container.innerHTML = ledgerHTML;
+
+    // Render Charts
+    document.getElementById('dashboardCharts').style.display = 'grid';
+    renderCharts(coSales, partyOutstandings);
+  }
+
+  function renderCharts(coSales, partyOutstandings) {
+    if (!window.Chart) return;
+    
+    // Donut Chart
+    const ctxDonut = document.getElementById('salesDonutChart');
+    if (!ctxDonut) return;
+    if (dashboardChartsInstance.donut) dashboardChartsInstance.donut.destroy();
+    
+    const coLabels = Object.keys(coSales);
+    const coData = Object.values(coSales);
+    const colors = ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'];
+
+    dashboardChartsInstance.donut = new Chart(ctxDonut, {
+      type: 'doughnut',
+      data: {
+        labels: coLabels,
+        datasets: [{
+          data: coData,
+          backgroundColor: colors,
+          borderWidth: 0
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'right' }
+        }
+      }
+    });
+
+    // Bar Chart
+    partyOutstandings.sort((a,b) => b.out - a.out);
+    const topParties = partyOutstandings.slice(0, 5);
+    
+    const ctxBar = document.getElementById('outstandingBarChart');
+    if (!ctxBar) return;
+    if (dashboardChartsInstance.bar) dashboardChartsInstance.bar.destroy();
+
+    dashboardChartsInstance.bar = new Chart(ctxBar, {
+      type: 'bar',
+      data: {
+        labels: topParties.map(p => p.name.length > 10 ? p.name.substring(0,10) + '...' : p.name),
+        datasets: [{
+          label: 'Outstanding (₹)',
+          data: topParties.map(p => p.out),
+          backgroundColor: '#ef4444',
+          borderRadius: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: { beginAtZero: true, display: false }
+        }
+      }
+    });
   }
 
   /* ============ PHASE 2: BILLING ============ */
