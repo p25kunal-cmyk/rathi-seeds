@@ -462,3 +462,34 @@ h1, h2, h3, h4 { color: var(--text-primary); font-weight: 600; }
     width: 100%;
   }
 }
+
+/* ---------- Forms ---------- */
+.form-group {
+  margin-bottom: 16px;
+  text-align: left;
+}
+.form-label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+.form-input, .form-select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border-clr);
+  border-radius: var(--radius-md);
+  background: var(--bg-page);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: border-color 0.2s;
+}
+.form-input:focus, .form-select:focus {
+  outline: none;
+  border-color: var(--clr-primary);
+}
+.form-select {
+  appearance: auto;
+}
