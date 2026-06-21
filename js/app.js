@@ -321,6 +321,58 @@ window.App = (() => {
     container.innerHTML = `<div class="card mt-16"><em>Billing generator for this company coming in Phase 2.</em></div>`;
   }
 
+  /* ============ DATABASE IMPORT ============ */
+  async function importDatabase() {
+    if (!confirm("Are you sure you want to run the data importer?")) return;
+    try {
+      showToast("Downloading import data...");
+      const res = await fetch('import_data.json');
+      const data = await res.json();
+      
+      showToast("Importing Companies...");
+      for (const co of data.companies) {
+        await addDoc(collection(db, "companies"), {
+          name: co["Company Name"] || "Unknown",
+          season: co["Season"] || "",
+          bank: co["Bank"] || "",
+          accountNo: co["Account No"] || "",
+          ifsc: co["IFSC"] || "",
+          notes: co["Notes"] || ""
+        });
+      }
+
+      showToast("Importing Seeds...");
+      // Map seeds to first company for simplicity if needed, or parse Co_ID if it matches exactly
+      for (const s of data.seeds) {
+        await addDoc(collection(db, "seeds"), {
+          name: s["Seed Name"] || "Unknown",
+          companyId: state.companies[0]?.id || "", // Temporarily link to first
+          weight: s["Bag Wt (Kg)"] || 0,
+          currentRate: s["Current Rate/Bag (₹)"] || 0,
+          allotment: s["Allotment %"] || 1,
+          season: s["Season"] || "",
+          notes: s["Notes"] || ""
+        });
+      }
+
+      showToast("Importing Parties...");
+      for (const p of data.parties) {
+        await addDoc(collection(db, "parties"), {
+          name: p["Party Name"] || "Unknown",
+          center: p["Center"] || "",
+          district: p["District"] || "",
+          phone: p["Phone"] || "",
+          isActive: p["Active"] === "Y"
+        });
+      }
+      
+      showToast("Import Complete!");
+    } catch(err) {
+      console.error(err);
+      showToast("Import failed. See console.");
+    }
+  }
+
 
   /* ============ UI UTILS ============ */
   function openModal(htmlContent) {
@@ -390,7 +442,8 @@ window.App = (() => {
     openAddSeedModal,
     openAddPartyModal,
     closeModals,
-    onBillingCompanyChange
+    onBillingCompanyChange,
+    importDatabase
   };
 
 })();

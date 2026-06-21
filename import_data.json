@@ -1,0 +1,3738 @@
+{
+  "companies": [
+    {
+      "Co_ID": "CO01",
+      "Company Name": "Unnati & Samrudhi (Unnati Seeds Co.)",
+      "Season": "Kharif 2026",
+      "Bank": "HDFC Bank",
+      "Account No": "50200017315601",
+      "IFSC": "HDFC0000965",
+      "Notes": "Unnati + Samrudhi soybean",
+      "": null
+    },
+    {
+      "Co_ID": "CO02",
+      "Company Name": "SKB Seeds",
+      "Season": "Kharif 2026",
+      "Bank": "HDFC Bank",
+      "Account No": "50200017315601",
+      "IFSC": "HDFC0000965",
+      "Notes": "Pushpa + Avantika soybean",
+      "": null
+    },
+    {
+      "Co_ID": "CO03",
+      "Company Name": "Booster Seeds",
+      "Season": "Kharif 2026",
+      "Bank": "HDFC Bank",
+      "Account No": "50200017315601",
+      "IFSC": "HDFC0000965",
+      "Notes": "Hututu, KhoKho, Tur, Cotton",
+      "": null
+    },
+    {
+      "Co_ID": "CO04",
+      "Company Name": "Savira Seeds",
+      "Season": "Kharif 2026",
+      "Bank": "HDFC Bank",
+      "Account No": "50200017315601",
+      "IFSC": "HDFC0000965",
+      "Notes": "Baliraja soybean",
+      "": null
+    }
+  ],
+  "seeds": [
+    {
+      "Seed_ID": "S001",
+      "Co_ID": "CO01",
+      "Company": "Unnati Seeds Co.",
+      "Seed Name": "Unnati",
+      "Bag Wt (Kg)": 25,
+      "Current Rate/Bag (\u20b9)": 3500,
+      "Allotment %": "22%",
+      "Season": "Kharif 2026",
+      "Notes": null,
+      "": null
+    },
+    {
+      "Seed_ID": "S002",
+      "Co_ID": "CO01",
+      "Company": "Unnati Seeds Co.",
+      "Seed Name": "Samrudhi",
+      "Bag Wt (Kg)": 25,
+      "Current Rate/Bag (\u20b9)": 3500,
+      "Allotment %": "27%",
+      "Season": "Kharif 2026",
+      "Notes": null,
+      "": null
+    },
+    {
+      "Seed_ID": "S003",
+      "Co_ID": "CO02",
+      "Company": "SKB Seeds",
+      "Seed Name": "Pushpa",
+      "Bag Wt (Kg)": 25,
+      "Current Rate/Bag (\u20b9)": 2999,
+      "Allotment %": "~%",
+      "Season": "Kharif 2026",
+      "Notes": "Pushpa 25kg",
+      "": null
+    },
+    {
+      "Seed_ID": "S004",
+      "Co_ID": "CO02",
+      "Company": "SKB Seeds",
+      "Seed Name": "Avantika",
+      "Bag Wt (Kg)": 27,
+      "Current Rate/Bag (\u20b9)": 3199,
+      "Allotment %": "~%",
+      "Season": "Kharif 2026",
+      "Notes": "Avantika 27kg",
+      "": null
+    },
+    {
+      "Seed_ID": "S005",
+      "Co_ID": "CO03",
+      "Company": "Booster Seeds",
+      "Seed Name": "Hututu",
+      "Bag Wt (Kg)": 25,
+      "Current Rate/Bag (\u20b9)": 3000,
+      "Allotment %": "38%",
+      "Season": "Kharif 2026",
+      "Notes": "Soya",
+      "": null
+    },
+    {
+      "Seed_ID": "S006",
+      "Co_ID": "CO03",
+      "Company": "Booster Seeds",
+      "Seed Name": "Kho Kho",
+      "Bag Wt (Kg)": 25,
+      "Current Rate/Bag (\u20b9)": 3000,
+      "Allotment %": "18%",
+      "Season": "Kharif 2026",
+      "Notes": "Soya",
+      "": null
+    },
+    {
+      "Seed_ID": "S007",
+      "Co_ID": "CO03",
+      "Company": "Booster Seeds",
+      "Seed Name": "Tur BDN716",
+      "Bag Wt (Kg)": null,
+      "Current Rate/Bag (\u20b9)": 250,
+      "Allotment %": "-",
+      "Season": "Kharif 2026",
+      "Notes": "Per Kg",
+      "": null
+    },
+    {
+      "Seed_ID": "S008",
+      "Co_ID": "CO03",
+      "Company": "Booster Seeds",
+      "Seed Name": "Lal Kranti",
+      "Bag Wt (Kg)": null,
+      "Current Rate/Bag (\u20b9)": 250,
+      "Allotment %": "-",
+      "Season": "Kharif 2026",
+      "Notes": "Per Kg",
+      "": null
+    },
+    {
+      "Seed_ID": "S009",
+      "Co_ID": "CO03",
+      "Company": "Booster Seeds",
+      "Seed Name": "Cotton",
+      "Bag Wt (Kg)": null,
+      "Current Rate/Bag (\u20b9)": null,
+      "Allotment %": "-",
+      "Season": "Kharif 2026",
+      "Notes": null,
+      "": null
+    },
+    {
+      "Seed_ID": "S010",
+      "Co_ID": "CO04",
+      "Company": "Savira Seeds",
+      "Seed Name": "Baliraja",
+      "Bag Wt (Kg)": 27,
+      "Current Rate/Bag (\u20b9)": null,
+      "Allotment %": "-",
+      "Season": "Kharif 2026",
+      "Notes": "27kg bag",
+      "": null
+    }
+  ],
+  "parties": [
+    {
+      "Party_ID": "P0001",
+      "Party Name": "Maa Bhavani",
+      "Center": "Agargaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0002",
+      "Party Name": "Jai Mata di",
+      "Center": "Alipur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0003",
+      "Party Name": "Bhojaji",
+      "Center": "Alipur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0004",
+      "Party Name": "Krushi Seva",
+      "Center": "Alipur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0005",
+      "Party Name": "Kuratkar",
+      "Center": "Andori",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0006",
+      "Party Name": "Gajanan",
+      "Center": "Andori",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0007",
+      "Party Name": "Zumde",
+      "Center": "Andori",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0008",
+      "Party Name": "Shri Sai",
+      "Center": "Andori",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0009",
+      "Party Name": "Dhole k k",
+      "Center": "Andori",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0010",
+      "Party Name": "Maa Bhavani k k",
+      "Center": "Andori",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0011",
+      "Party Name": "Govind k k",
+      "Center": "Bhankheda",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0012",
+      "Party Name": "Sai k k",
+      "Center": "Bhankheda",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0013",
+      "Party Name": "Meher Baba",
+      "Center": "Bhankheda",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0014",
+      "Party Name": "Aarya K K",
+      "Center": "Bhankheda",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0015",
+      "Party Name": "Sheetal K K",
+      "Center": "Bhidi",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0016",
+      "Party Name": "Nitin k k",
+      "Center": "Bhidi",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0017",
+      "Party Name": "Wadera k k",
+      "Center": "Bhidi",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0018",
+      "Party Name": "Shetkari",
+      "Center": "Bhidi",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0019",
+      "Party Name": "Jai baba",
+      "Center": "Bhidi",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0020",
+      "Party Name": "Piyush k k",
+      "Center": "Borgaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0021",
+      "Party Name": "Kashikar k k",
+      "Center": "Deoli",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0022",
+      "Party Name": "Umre",
+      "Center": "Deoli",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0023",
+      "Party Name": "Gurudeo k k",
+      "Center": "Deoli",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0024",
+      "Party Name": "Badnore A",
+      "Center": "Deoli",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0025",
+      "Party Name": "Sagar k k",
+      "Center": "Deoli",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0026",
+      "Party Name": "Monali",
+      "Center": "Deoli",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0027",
+      "Party Name": "Bhoyar k k",
+      "Center": "Deoli",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0028",
+      "Party Name": "Arade",
+      "Center": "Deoli",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0029",
+      "Party Name": "Mahajan",
+      "Center": "Deoli",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0030",
+      "Party Name": "Shri krushi vikas",
+      "Center": "Deoli",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0031",
+      "Party Name": "Krushi Mitra",
+      "Center": "Deoli",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0032",
+      "Party Name": "Chintamani K K",
+      "Center": "Deoli",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0033",
+      "Party Name": "Sidhi K k",
+      "Center": "Deoli",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0034",
+      "Party Name": "Krushi Suvidha",
+      "Center": "Deoli",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0035",
+      "Party Name": "Pratik K K",
+      "Center": "Dhegaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0036",
+      "Party Name": "Bhojaji k k",
+      "Center": "Dhegaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0037",
+      "Party Name": "Sachin k k",
+      "Center": "Girad",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0038",
+      "Party Name": "Jai Kisan k k",
+      "Center": "Girad",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0039",
+      "Party Name": "Mahalaxmi k k",
+      "Center": "Girad",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0040",
+      "Party Name": "Gourkar k k",
+      "Center": "Girad",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0041",
+      "Party Name": "Gajanan Maharaj",
+      "Center": "Girad",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0042",
+      "Party Name": "Vidharbh",
+      "Center": "Girad",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0043",
+      "Party Name": "Kisan Mauli",
+      "Center": "Girad",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0044",
+      "Party Name": "Wagh K k",
+      "Center": "Girad",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0045",
+      "Party Name": "Rajesh k k",
+      "Center": "Girad",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0046",
+      "Party Name": "Ahish K K",
+      "Center": "Girad",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0047",
+      "Party Name": "Mangal Murti",
+      "Center": "Ghorad",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0048",
+      "Party Name": "Shiv Krupa",
+      "Center": "Ghorad",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0049",
+      "Party Name": "Raut k k",
+      "Center": "Ghorad",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0050",
+      "Party Name": "Swami samarth",
+      "Center": "Ghorad",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0051",
+      "Party Name": "Sushil",
+      "Center": "Ghorad",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0052",
+      "Party Name": "Sidhi Vinayak",
+      "Center": "Ghorad",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0053",
+      "Party Name": "Hari Krupa",
+      "Center": "Hamdapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0054",
+      "Party Name": "Shende k k",
+      "Center": "Hamdapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0055",
+      "Party Name": "Shetkari k k",
+      "Center": "Hamdapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0056",
+      "Party Name": "Samta k k",
+      "Center": "Hamdapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0057",
+      "Party Name": "Bhoyar",
+      "Center": "Hamdapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0058",
+      "Party Name": "Maa Bhavani",
+      "Center": "Hamdapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0059",
+      "Party Name": "Pankaj",
+      "Center": "Hamdapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0060",
+      "Party Name": "Dhananjay k k",
+      "Center": "Hamdapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0061",
+      "Party Name": "Shriram k k",
+      "Center": "Hamdapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0062",
+      "Party Name": "Sai k k",
+      "Center": "Hamdapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0063",
+      "Party Name": "Sairaj k k",
+      "Center": "Hamdapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0064",
+      "Party Name": "Krushi seva",
+      "Center": "Hinganghat",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0065",
+      "Party Name": "Saraswati k k",
+      "Center": "Hinganghat",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0066",
+      "Party Name": "Majeshet k k",
+      "Center": "Hinganghat",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0067",
+      "Party Name": "Sancklecha",
+      "Center": "Hinganghat",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0068",
+      "Party Name": "Kothari k k",
+      "Center": "Hinganghat",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0069",
+      "Party Name": "Kisan Bandhu",
+      "Center": "Hinganghat",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0070",
+      "Party Name": "Maa Bhavani",
+      "Center": "Hinganghat",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0071",
+      "Party Name": "Chandrabhaga",
+      "Center": "Hinganghat",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0072",
+      "Party Name": "Ravi Seeds",
+      "Center": "Hinganghat",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0073",
+      "Party Name": "Abhay seeds",
+      "Center": "Hinganghat",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0074",
+      "Party Name": "Samrudhi",
+      "Center": "Hinganghat",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0075",
+      "Party Name": "Kochar Biyane",
+      "Center": "Hinganghat",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0076",
+      "Party Name": "Kochar k k",
+      "Center": "Hinganghat",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0077",
+      "Party Name": "Balpande k k",
+      "Center": "Hinganghat",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0078",
+      "Party Name": "Sachin k k",
+      "Center": "Hinganghat",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0079",
+      "Party Name": "Shivneri k k",
+      "Center": "Hinganghat",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0080",
+      "Party Name": "Shri k k",
+      "Center": "Hinganghat",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0081",
+      "Party Name": "Badiraja k k",
+      "Center": "Hinganghat",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0082",
+      "Party Name": "Mahalaxmi k k",
+      "Center": "Hinganghat",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0083",
+      "Party Name": "Ganga sales",
+      "Center": "Hinganghat",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0084",
+      "Party Name": "Rajendra k k",
+      "Center": "Hinganghat",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0085",
+      "Party Name": "Deotale",
+      "Center": "Hinganghat",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0086",
+      "Party Name": "Shri hari k k",
+      "Center": "Hinganghat",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0087",
+      "Party Name": "Balaji k k",
+      "Center": "Inzala",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0088",
+      "Party Name": "Mahalaxmi k k",
+      "Center": "Inzala",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0089",
+      "Party Name": "Sairam k",
+      "Center": "Nachangaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0090",
+      "Party Name": "Mauli k k",
+      "Center": "Nachangaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0091",
+      "Party Name": "Priya k k",
+      "Center": "Nachangaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0092",
+      "Party Name": "Kisan k k",
+      "Center": "Nachangaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0093",
+      "Party Name": "Mauli k k",
+      "Center": "Junona",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0094",
+      "Party Name": "Trimurti",
+      "Center": "Junona",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0095",
+      "Party Name": "Badiraja k k",
+      "Center": "Junona",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0096",
+      "Party Name": "Raut k k",
+      "Center": "Kandhali",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0097",
+      "Party Name": "Ghanchaya",
+      "Center": "Kandhali",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0098",
+      "Party Name": "Santaji",
+      "Center": "Kandhali",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0099",
+      "Party Name": "Avchat k k",
+      "Center": "Kandhali",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0100",
+      "Party Name": "Dekate",
+      "Center": "Karanji Bhoge",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0101",
+      "Party Name": "Bhumiputra k k",
+      "Center": "Karanji Bhoge",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0102",
+      "Party Name": "Chintamani K K",
+      "Center": "Kelzar",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0103",
+      "Party Name": "Anand Traders",
+      "Center": "Kelzar",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0104",
+      "Party Name": "Kelzar k k",
+      "Center": "Kelzar",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0105",
+      "Party Name": "Sidhi Vinayak",
+      "Center": "Kelzar",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0106",
+      "Party Name": "Jagdamb k k",
+      "Center": "Kora",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0107",
+      "Party Name": "Swayam k k",
+      "Center": "Kora",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0108",
+      "Party Name": "Amruta k k",
+      "Center": "Kora",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0109",
+      "Party Name": "Pragati k k",
+      "Center": "Kora",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0110",
+      "Party Name": "Adarsh k k",
+      "Center": "Kora",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0111",
+      "Party Name": "Nagdi k k",
+      "Center": "Kora",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0112",
+      "Party Name": "Shri Ganesh",
+      "Center": "Kora",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0113",
+      "Party Name": "Ayush k k",
+      "Center": "Kora",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0114",
+      "Party Name": "Bhandakkar",
+      "Center": "Kora",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0115",
+      "Party Name": "Isankar k k",
+      "Center": "Kora",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0116",
+      "Party Name": "Laxmi k k",
+      "Center": "Mahakal",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0117",
+      "Party Name": "Mahesh K K",
+      "Center": "Mandgaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0118",
+      "Party Name": "Krushi Mitra",
+      "Center": "Mandgaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0119",
+      "Party Name": "Bharat k k",
+      "Center": "Mandgaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0120",
+      "Party Name": "Kastakar k k",
+      "Center": "Mandgaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0121",
+      "Party Name": "Farmer Producer",
+      "Center": "Mandgaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0122",
+      "Party Name": "Sahil",
+      "Center": "Mandgaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0123",
+      "Party Name": "Parate",
+      "Center": "Hingni",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0124",
+      "Party Name": "Bhavani",
+      "Center": "Hingni",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0125",
+      "Party Name": "Watkar",
+      "Center": "Hingni",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0126",
+      "Party Name": "Bhaskar",
+      "Center": "Hingni",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0127",
+      "Party Name": "Sai k k",
+      "Center": "Nandori",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0128",
+      "Party Name": "Taori K  k",
+      "Center": "Pulgaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0129",
+      "Party Name": "Dhamiya k k",
+      "Center": "Pulgaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0130",
+      "Party Name": "Kisan A A",
+      "Center": "Pulgaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0131",
+      "Party Name": "Chintamani K K",
+      "Center": "Pulgaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0132",
+      "Party Name": "Saibaba K k",
+      "Center": "Pulgaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0133",
+      "Party Name": "Kanoba A Ag",
+      "Center": "Pulgaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0134",
+      "Party Name": "Priya fertilizers",
+      "Center": "Pulgaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0135",
+      "Party Name": "Vaishnavi k k",
+      "Center": "Rehki",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0136",
+      "Party Name": "Ganesh k k",
+      "Center": "Rehki",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0137",
+      "Party Name": "Jaiswal k k",
+      "Center": "Rehki",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0138",
+      "Party Name": "Shree Ram K K",
+      "Center": "Samudrapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0139",
+      "Party Name": "Krishi Kranti",
+      "Center": "Samudrapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0140",
+      "Party Name": "Jain Traders",
+      "Center": "Samudrapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0141",
+      "Party Name": "Kastakar k k",
+      "Center": "Samudrapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0142",
+      "Party Name": "Shri Gajanan",
+      "Center": "Samudrapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0143",
+      "Party Name": "Shankar",
+      "Center": "Samudrapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0144",
+      "Party Name": "Bhojaji k k",
+      "Center": "Samudrapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0145",
+      "Party Name": "Zade k k",
+      "Center": "Samudrapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0146",
+      "Party Name": "Gurudeo k k",
+      "Center": "Samudrapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0147",
+      "Party Name": "Maa Laxmi k k",
+      "Center": "Samudrapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0148",
+      "Party Name": "Sanket k k",
+      "Center": "Samudrapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0149",
+      "Party Name": "Whagheda framer pro",
+      "Center": "Samudrapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0150",
+      "Party Name": "Badiraja k k",
+      "Center": "Samudrapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0151",
+      "Party Name": "Agrawal k k",
+      "Center": "Samudrapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0152",
+      "Party Name": "Ande k k",
+      "Center": "Samudrapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0153",
+      "Party Name": "Babulkar K K",
+      "Center": "Samudrapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0154",
+      "Party Name": "Krushi mitra",
+      "Center": "Selu",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0155",
+      "Party Name": "Parag K k",
+      "Center": "Selu",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0156",
+      "Party Name": "Mahalaxmi k",
+      "Center": "Selu",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0157",
+      "Party Name": "Jai Bajrang",
+      "Center": "Selu",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0158",
+      "Party Name": "Radha k k",
+      "Center": "Selu",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0159",
+      "Party Name": "Jain k k",
+      "Center": "Selu",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0160",
+      "Party Name": "Dhanashri",
+      "Center": "Selu",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0161",
+      "Party Name": "Jailaxmi K K",
+      "Center": "Selu",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0162",
+      "Party Name": "Gurukrupa Organic",
+      "Center": "Selu",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0163",
+      "Party Name": "Bhushan k k",
+      "Center": "Sindhi Rly",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0164",
+      "Party Name": "Shetmauli k k",
+      "Center": "Sindhi Rly",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0165",
+      "Party Name": "Venkatesh",
+      "Center": "Sindhi Rly",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0166",
+      "Party Name": "Kirti",
+      "Center": "Sindhi Rly",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0167",
+      "Party Name": "Narayan k k",
+      "Center": "Sindhi Rly",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0168",
+      "Party Name": "Jaikisan",
+      "Center": "Sindhi Rly",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0169",
+      "Party Name": "Kisan Tr Co",
+      "Center": "Sindhi Rly",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0170",
+      "Party Name": "Shetkari Suvhidha",
+      "Center": "Sindhi Rly",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0171",
+      "Party Name": "Shree Seeds",
+      "Center": "Talegaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0172",
+      "Party Name": "Balaji k k",
+      "Center": "Talegaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0173",
+      "Party Name": "Rutika k k",
+      "Center": "Talni",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0174",
+      "Party Name": "Jai Jagannath",
+      "Center": "Vashi",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0175",
+      "Party Name": "Pragati kk",
+      "Center": "Vashi",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0176",
+      "Party Name": "Mirani k k",
+      "Center": "Waigaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0177",
+      "Party Name": "Balaji k k",
+      "Center": "Waigaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0178",
+      "Party Name": "Kartik k k",
+      "Center": "Waigaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0179",
+      "Party Name": "Nagrale k k",
+      "Center": "Waigaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0180",
+      "Party Name": "Laxmi k k",
+      "Center": "Waigaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0181",
+      "Party Name": "Annadata kk",
+      "Center": "Waigaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0182",
+      "Party Name": "Pawan k Mandir",
+      "Center": "Waigaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0183",
+      "Party Name": "Om krushi mandir",
+      "Center": "Waigaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0184",
+      "Party Name": "Jagdamba K K",
+      "Center": "Waigaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0185",
+      "Party Name": "Sethkari K K",
+      "Center": "Waigaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0186",
+      "Party Name": "Wankhede A A",
+      "Center": "Wardha",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0187",
+      "Party Name": "Dhartidhan",
+      "Center": "Wardha",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0188",
+      "Party Name": "Mahakali",
+      "Center": "Wardha",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0189",
+      "Party Name": "Shri Seeds",
+      "Center": "Wardha",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0190",
+      "Party Name": "Govind A A",
+      "Center": "Wardha",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0191",
+      "Party Name": "Akshay Seeds",
+      "Center": "Wardha",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0192",
+      "Party Name": "Patil k k",
+      "Center": "Wardha",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0193",
+      "Party Name": "Vidharbh A A",
+      "Center": "Wardha",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0194",
+      "Party Name": "Vidharbh k k",
+      "Center": "Wardha",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0195",
+      "Party Name": "Shri Agro",
+      "Center": "Wardha",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0196",
+      "Party Name": "Nitin Marketing",
+      "Center": "Wardha",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0197",
+      "Party Name": "Kothari k k",
+      "Center": "Wardha",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0198",
+      "Party Name": "Badnore Agro",
+      "Center": "Wardha",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0199",
+      "Party Name": "Gayatri Biyane",
+      "Center": "Wardha",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0200",
+      "Party Name": "Chandak A Cen",
+      "Center": "Wardha",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0201",
+      "Party Name": "Chandak Traders",
+      "Center": "Wardha",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0202",
+      "Party Name": "Gayatri Ramnagar",
+      "Center": "Wardha",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0203",
+      "Party Name": "Rathi Traders",
+      "Center": "Wardha",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0204",
+      "Party Name": "Mauli k k",
+      "Center": "Ghunkheda",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0205",
+      "Party Name": "Shende Bandhu",
+      "Center": "Barbadi",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0206",
+      "Party Name": "Kiran k k",
+      "Center": "Pawnar",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0207",
+      "Party Name": "Prem k k",
+      "Center": "Pawnar",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0208",
+      "Party Name": "Gurudeo k k",
+      "Center": "Pawnar",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0209",
+      "Party Name": "Bhumiputra",
+      "Center": "Anji",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0210",
+      "Party Name": "Gupta",
+      "Center": "Anji",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0211",
+      "Party Name": "Krushi Mitra",
+      "Center": "Anji",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0212",
+      "Party Name": "Sai k k",
+      "Center": "Anji",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0213",
+      "Party Name": "Shri Agro",
+      "Center": "Anji",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0214",
+      "Party Name": "Krushi Seva kendre",
+      "Center": "Taroda",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0215",
+      "Party Name": "Kejaji k k",
+      "Center": "Taroda",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0216",
+      "Party Name": "Kejaji A Traders",
+      "Center": "Taroda",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0217",
+      "Party Name": "Kunal A A",
+      "Center": "Taroda",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0218",
+      "Party Name": "Sai k k",
+      "Center": "Taroda",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0219",
+      "Party Name": "Maa Vaishnavi",
+      "Center": "Taroda",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0220",
+      "Party Name": "Shri Venkatesh",
+      "Center": "Taroda",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0221",
+      "Party Name": "Satvik k k",
+      "Center": "Salod",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0222",
+      "Party Name": "Renuka",
+      "Center": "Salod",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0223",
+      "Party Name": "KISANHELP AGRO",
+      "Center": "Salod",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0224",
+      "Party Name": "Radhika k",
+      "Center": "Salod",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0225",
+      "Party Name": "Radheyshyam Traders",
+      "Center": "Salod",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0226",
+      "Party Name": "Bhagat Laxmi",
+      "Center": "Dongargaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0227",
+      "Party Name": "Vasundhara",
+      "Center": "Borgaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0228",
+      "Party Name": "Shetkari k k",
+      "Center": "Swali Wagh",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0229",
+      "Party Name": "Dhiraj k k",
+      "Center": "Swali Wagh",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0230",
+      "Party Name": "Tulza Bhavani k k",
+      "Center": "Pailanpur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0231",
+      "Party Name": "Arihant k k",
+      "Center": "Vijay Gopal",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0232",
+      "Party Name": "Vikaram KSK",
+      "Center": "Vijay Gopal",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0233",
+      "Party Name": "Uday k k",
+      "Center": "Sirasgaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0234",
+      "Party Name": "Astavinayak",
+      "Center": "Sirasgaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0235",
+      "Party Name": "Amol k k",
+      "Center": "Wadner",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0236",
+      "Party Name": "Bhuthada Fertilizer",
+      "Center": "Majra",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0237",
+      "Party Name": "Bhojaji",
+      "Center": "Madni",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0238",
+      "Party Name": "Tarachand",
+      "Center": "Madni",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0239",
+      "Party Name": "Ram k k",
+      "Center": "Madni",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0240",
+      "Party Name": "Pratik A A",
+      "Center": "Jaipur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0241",
+      "Party Name": "Saraswati k k",
+      "Center": "Padegaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0242",
+      "Party Name": "Chintamani K K",
+      "Center": "Whagholi",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0243",
+      "Party Name": "Mende",
+      "Center": "Whagholi",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0244",
+      "Party Name": "Matoshri",
+      "Center": "Whagholi",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0245",
+      "Party Name": "Sant Gajanan",
+      "Center": "Whagholi",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0246",
+      "Party Name": "Kastakar k k",
+      "Center": "Whagholi",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0247",
+      "Party Name": "Matrubhumi",
+      "Center": "Whagholi",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0248",
+      "Party Name": "Shri Sai",
+      "Center": "Whagholi",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0249",
+      "Party Name": "Bhende",
+      "Center": "Whagholi",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0250",
+      "Party Name": "Sadguru",
+      "Center": "Whagholi",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0251",
+      "Party Name": "Anshika",
+      "Center": "Asta",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0252",
+      "Party Name": "Shri Krushna",
+      "Center": "Asta",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0253",
+      "Party Name": "Bothara",
+      "Center": "Pohana",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0254",
+      "Party Name": "Jain k k",
+      "Center": "Pohana",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0255",
+      "Party Name": "Datta",
+      "Center": "Virul",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0256",
+      "Party Name": "Shetkari k k",
+      "Center": "Virul",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0257",
+      "Party Name": "Om krushi kendre",
+      "Center": "Giroli",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0258",
+      "Party Name": "Ghongde",
+      "Center": "Jamni",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0259",
+      "Party Name": "Hore k k",
+      "Center": "ShirPur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0260",
+      "Party Name": "Maa Bhavani",
+      "Center": "Kanhapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0261",
+      "Party Name": "Jai bhole k k",
+      "Center": "Kanhapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0262",
+      "Party Name": "Jai bhole k k",
+      "Center": "Bhugaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0263",
+      "Party Name": "Jai Laxmi k k",
+      "Center": "Sekhapur Vai",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0264",
+      "Party Name": "Jain Traders",
+      "Center": "Rohana",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0265",
+      "Party Name": "prabhama",
+      "Center": "Rohana",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0266",
+      "Party Name": "Priyanka",
+      "Center": "Sarwadi",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0267",
+      "Party Name": "Shrayaas k k",
+      "Center": "Mandwa",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0268",
+      "Party Name": "Matoshri",
+      "Center": "Adegaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0269",
+      "Party Name": "Sairam k k",
+      "Center": "Gondapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0270",
+      "Party Name": "Sairam k k",
+      "Center": "Vikni",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0271",
+      "Party Name": "Samarth",
+      "Center": "Pawni",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0272",
+      "Party Name": "Shende k k",
+      "Center": "Jam",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0273",
+      "Party Name": "Shetkari k k",
+      "Center": "Whaghala",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0274",
+      "Party Name": "Jikar k k",
+      "Center": "Whaghala",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0275",
+      "Party Name": "Shetmauli",
+      "Center": "Inzapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0276",
+      "Party Name": "Tejas",
+      "Center": "Kopara",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0277",
+      "Party Name": "jai Bajrang",
+      "Center": "Paloti",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0278",
+      "Party Name": "Pragati kk",
+      "Center": "Sukali Station",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0279",
+      "Party Name": "Maa Vaishnavi",
+      "Center": "Morchapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0280",
+      "Party Name": "Shridev",
+      "Center": "Karanji Kaji",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0281",
+      "Party Name": "Bhagat k k",
+      "Center": "Yelakeli",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0282",
+      "Party Name": "Swami samarth",
+      "Center": "Yelakeli",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0283",
+      "Party Name": "Lonkar k k",
+      "Center": "Wela",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0284",
+      "Party Name": "Astavinayak",
+      "Center": "Wela",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0285",
+      "Party Name": "Shradha",
+      "Center": "Wela",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0286",
+      "Party Name": "Kapse",
+      "Center": "Goji",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0287",
+      "Party Name": "Dharne",
+      "Center": "Dhagaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0288",
+      "Party Name": "Sagar k k",
+      "Center": "yesamba",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0289",
+      "Party Name": "Bhikaji k k",
+      "Center": "Waigaon Gond",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0290",
+      "Party Name": "Shetkari k k",
+      "Center": "Akorli",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0291",
+      "Party Name": "Chandak A Cen",
+      "Center": "Arvi",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0292",
+      "Party Name": "Agrawal k k",
+      "Center": "Arvi",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0293",
+      "Party Name": "Jaishree K k",
+      "Center": "Arvi",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0294",
+      "Party Name": "Milind k k",
+      "Center": "Surgaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0295",
+      "Party Name": "Mahalaxmi k k",
+      "Center": "Kharangna Gode",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0296",
+      "Party Name": "Tulza Bhavani k k",
+      "Center": "Wadona",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0297",
+      "Party Name": "Om Sai",
+      "Center": "Wadona",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0298",
+      "Party Name": "Krushna k k",
+      "Center": "Talegaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0299",
+      "Party Name": "Bhavani",
+      "Center": "Talegaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0300",
+      "Party Name": "Sai baba",
+      "Center": "Talegaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "DOne",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0301",
+      "Party Name": "Chintamani K K",
+      "Center": "Vadad",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0302",
+      "Party Name": "Gaurav k k",
+      "Center": "Sonora",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0303",
+      "Party Name": "Paramsansh",
+      "Center": "Shendri",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0304",
+      "Party Name": "Ganesh A A",
+      "Center": "Kharangna Mor",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0305",
+      "Party Name": "Jai Bajrang",
+      "Center": "Kharangna Mor",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0306",
+      "Party Name": "Shri Seeds",
+      "Center": "Kharangna Mor",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0307",
+      "Party Name": "Shriram k k",
+      "Center": "Karanja",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0308",
+      "Party Name": "Agrawal k k",
+      "Center": "Karanja",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0309",
+      "Party Name": "Venkatesh",
+      "Center": "Karanja",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0310",
+      "Party Name": "Suraj A A",
+      "Center": "Karanja",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0311",
+      "Party Name": "Ramdev kk",
+      "Center": "Waifad",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0312",
+      "Party Name": "Jai santoshi k k",
+      "Center": "Waifad",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0313",
+      "Party Name": "Vithoba KSK",
+      "Center": "Wapgaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0314",
+      "Party Name": "Vandana k k",
+      "Center": "Wadgaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0315",
+      "Party Name": "Atharav K k",
+      "Center": "Pimpalgaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0316",
+      "Party Name": "Pekaji k k",
+      "Center": "Sastabad",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0317",
+      "Party Name": "Bhojaji",
+      "Center": "Deurgaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0318",
+      "Party Name": "Om k",
+      "Center": "Fatepur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0319",
+      "Party Name": "Meher k k",
+      "Center": "Rohni",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0320",
+      "Party Name": "Sangarsh k k",
+      "Center": "Madna",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0321",
+      "Party Name": "Vihan",
+      "Center": "Mansawli",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0322",
+      "Party Name": "Jai Ambe k k",
+      "Center": "Sorta",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": "Done",
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0323",
+      "Party Name": "Krushi seva",
+      "Center": "Asti",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0324",
+      "Party Name": "Tuljai KSK",
+      "Center": "Sukali",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0325",
+      "Party Name": "Laxmi k mandir",
+      "Center": "Kosurla",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0326",
+      "Party Name": "Shaswat k k",
+      "Center": "Sirsamudrapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0327",
+      "Party Name": "Shetkari k k",
+      "Center": "Zadsi",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0328",
+      "Party Name": "Balaji k k",
+      "Center": "Vahitpur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0329",
+      "Party Name": "Bakane k k",
+      "Center": "Sevagram",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0330",
+      "Party Name": "Shri Ram k k",
+      "Center": "Sevagram",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0331",
+      "Party Name": "Shri laxmi",
+      "Center": "Sevagram",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0332",
+      "Party Name": "Venkatsh k mac",
+      "Center": null,
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0333",
+      "Party Name": "Kisan Krushi",
+      "Center": "Pipri",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0334",
+      "Party Name": "Shri Maharudra",
+      "Center": "Rajapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0335",
+      "Party Name": "Renuka k k",
+      "Center": "Salod",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0336",
+      "Party Name": "Radhika k k",
+      "Center": null,
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0337",
+      "Party Name": "Gupta kk",
+      "Center": "Anji",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0338",
+      "Party Name": "Jai Shree k k",
+      "Center": "Arvi",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0339",
+      "Party Name": "Prabhai k k",
+      "Center": "Bedona",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0340",
+      "Party Name": "Sital k k",
+      "Center": "Bhidi",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0341",
+      "Party Name": "Umre k k",
+      "Center": "Deoli",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0342",
+      "Party Name": "Kothari Krushi",
+      "Center": "Hinganghat",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0343",
+      "Party Name": "Chintaman k k",
+      "Center": "Inzala",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0344",
+      "Party Name": "Ganesh Agr",
+      "Center": "Kharangna",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0345",
+      "Party Name": "Laxmi k",
+      "Center": "Mahakal",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0346",
+      "Party Name": "Saraswati k kk",
+      "Center": "Padegaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0347",
+      "Party Name": "Samarth k k",
+      "Center": "Pavni",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0348",
+      "Party Name": "Taori ksk",
+      "Center": "Pulgaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0349",
+      "Party Name": "Kisan Agro",
+      "Center": "Pulgaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0350",
+      "Party Name": "Krush Karanti",
+      "Center": "Samudrapur",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0351",
+      "Party Name": "Shetkari Suvhidah",
+      "Center": "Sindhi",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0352",
+      "Party Name": "Krushi Vikas",
+      "Center": "Sindhi",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0353",
+      "Party Name": "Vaishnavi",
+      "Center": "Taroda",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0354",
+      "Party Name": "Gandhi k k",
+      "Center": "Wadona",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0355",
+      "Party Name": "Karthik k k",
+      "Center": "Waigaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0356",
+      "Party Name": "Annadata k k",
+      "Center": "Waigaon",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    },
+    {
+      "Party_ID": "P0357",
+      "Party Name": "Vidharbh Krushi Kendre",
+      "Center": "Wardha",
+      "District": "Wardha",
+      "Phone": null,
+      "Intro": null,
+      "Active": "Yes",
+      "": null
+    }
+  ]
+}
